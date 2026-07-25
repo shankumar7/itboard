@@ -31,7 +31,7 @@ const formSchema = z.object({
   backlogs: z.enum(['Yes', 'No']),
   backlog_subjects: z.string().optional(),
   attendance: z.string().min(1, 'Attendance is required'),
-  club: z.enum(['League of Coders', 'Web Development Club', 'AI Minds']),
+  club: z.string().optional(),
   role: z.string().min(1, 'Role is required'),
   
   // URLs
@@ -123,6 +123,7 @@ export function ApplicationForm() {
       github: '',
       linkedin: '',
       portfolio: '',
+      club: 'Central Board',
       hackathons: '',
       why_join: '',
       why_choose_you: '',
@@ -204,7 +205,7 @@ export function ApplicationForm() {
         backlogs: data.backlogs === 'Yes',
         backlog_subjects: data.backlog_subjects,
         attendance: data.attendance,
-        club: data.club,
+        club: data.club || 'Central Board',
         role: data.role,
         github: data.github,
         linkedin: data.linkedin,
@@ -351,25 +352,7 @@ export function ApplicationForm() {
             {errors.branch && <p className="text-sm text-destructive">{errors.branch.message}</p>}
           </div>
 
-          <div className="space-y-2">
-            <Label>Club Preference *</Label>
-            <Controller
-              name="club"
-              control={control}
-              render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="premium-input"><SelectValue placeholder="Select Club" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="League of Coders">League of Coders</SelectItem>
-                    <SelectItem value="Web Development Club">Web Development Club</SelectItem>
-                    <SelectItem value="AI Minds">AI Minds</SelectItem>
-                    <SelectItem value="Central Board">Central Board</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            {errors.club && <p className="text-sm text-destructive">{errors.club.message}</p>}
-          </div>
+
 
           <div className="space-y-2">
             <Label>Do you currently have backlogs? *</Label>

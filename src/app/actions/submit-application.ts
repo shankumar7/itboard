@@ -54,14 +54,18 @@ export async function submitApplicationAction(data: {
       return { success: false, error: error.message }
     }
 
-    // Trigger confirmation email
-    sendConfirmationEmail({
-      name: data.name,
-      roll_number: data.roll_number,
-      college_email: data.college_email,
-      role: data.role,
-      club: data.club,
-    }).catch(err => console.error('Background email error:', err))
+    // Trigger confirmation email (awaited so Vercel serverless function completes transmission)
+    try {
+      await sendConfirmationEmail({
+        name: data.name,
+        roll_number: data.roll_number,
+        college_email: data.college_email,
+        role: data.role,
+        club: data.club,
+      })
+    } catch (emailErr) {
+      console.error('Confirmation email delivery error:', emailErr)
+    }
 
     return { success: true }
   } catch (err: any) {
