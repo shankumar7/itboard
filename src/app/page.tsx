@@ -101,11 +101,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center space-y-6 sm:space-y-8"
           >
-            {/* Live Pill Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-primary/30 text-[11px] font-bold text-primary tracking-widest uppercase backdrop-blur-xl shadow-[0_0_20px_rgba(245,197,24,0.15)]">
-              <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
-              <span>RECRUITMENT 2026 IS LIVE</span>
-            </div>
+
 
             {/* Headline */}
             <div className="px-2">
