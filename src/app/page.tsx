@@ -280,7 +280,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto">
             {/* Featured Image Card */}
-            <div className="glass-card overflow-hidden group relative h-[250px] sm:h-[310px] border-white/10">
+            <div className="glass-card overflow-hidden group relative h-[400px] sm:h-[310px] border-white/10">
               <img 
                 src="/board-banner.jpeg" 
                 alt="IT Board Leadership" 
