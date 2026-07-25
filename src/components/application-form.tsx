@@ -248,27 +248,27 @@ export function ApplicationForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label>Full Name *</Label>
-            <Input className="clay-input" {...register('name')} placeholder="John Doe" />
+            <Input className="premium-input" {...register('name')} placeholder="John Doe" />
             {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
           </div>
           <div className="space-y-2">
             <Label>Roll Number *</Label>
-            <Input className="clay-input" {...register('roll_number')} placeholder="22BQ1A..." />
+            <Input className="premium-input" {...register('roll_number')} placeholder="22BQ1A..." />
             {errors.roll_number && <p className="text-sm text-destructive">{errors.roll_number.message}</p>}
           </div>
           <div className="space-y-2">
             <Label>College Email *</Label>
-            <Input className="clay-input" type="email" {...register('college_email')} placeholder="student@college.edu" />
+            <Input className="premium-input" type="email" {...register('college_email')} placeholder="student@college.edu" />
             {errors.college_email && <p className="text-sm text-destructive">{errors.college_email.message}</p>}
           </div>
           <div className="space-y-2">
             <Label>Personal Email *</Label>
-            <Input className="clay-input" type="email" {...register('personal_email')} placeholder="personal@gmail.com" />
+            <Input className="premium-input" type="email" {...register('personal_email')} placeholder="personal@gmail.com" />
             {errors.personal_email && <p className="text-sm text-destructive">{errors.personal_email.message}</p>}
           </div>
           <div className="space-y-2">
             <Label>Phone Number *</Label>
-            <Input className="clay-input" {...register('phone')} placeholder="9876543210" />
+            <Input className="premium-input" {...register('phone')} placeholder="9876543210" />
             {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
           </div>
         </div>
@@ -285,7 +285,7 @@ export function ApplicationForm() {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="clay-input"><SelectValue placeholder="Select Year" /></SelectTrigger>
+                  <SelectTrigger className="premium-input"><SelectValue placeholder="Select Year" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Second Year">Second Year</SelectItem>
                     <SelectItem value="Third Year">Third Year</SelectItem>
@@ -303,7 +303,7 @@ export function ApplicationForm() {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="clay-input"><SelectValue placeholder="Select Role" /></SelectTrigger>
+                  <SelectTrigger className="premium-input"><SelectValue placeholder="Select Role" /></SelectTrigger>
                   <SelectContent>
                     <optgroup label="Senior Positions">
                       {SENIOR_ROLES.map(role => (
@@ -329,7 +329,7 @@ export function ApplicationForm() {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="clay-input"><SelectValue placeholder="Select Branch" /></SelectTrigger>
+                  <SelectTrigger className="premium-input"><SelectValue placeholder="Select Branch" /></SelectTrigger>
                   <SelectContent>
                     {availableBranches.map(b => (
                       <SelectItem key={b} value={b}>{b}</SelectItem>
@@ -353,7 +353,7 @@ export function ApplicationForm() {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="clay-input"><SelectValue placeholder="Select Club" /></SelectTrigger>
+                  <SelectTrigger className="premium-input"><SelectValue placeholder="Select Club" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="League of Coders">League of Coders</SelectItem>
                     <SelectItem value="Web Development Club">Web Development Club</SelectItem>
@@ -372,7 +372,7 @@ export function ApplicationForm() {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="clay-input"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectTrigger className="premium-input"><SelectValue placeholder="Select" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Yes">Yes</SelectItem>
                     <SelectItem value="No">No</SelectItem>
@@ -384,13 +384,13 @@ export function ApplicationForm() {
 
           <div className="space-y-2">
             <Label>Current CGPA * {watchBacklogs === 'Yes' && '(Enter NA if applicable)'}</Label>
-            <Input className="clay-input" {...register('cgpa')} placeholder="e.g. 8.5 or NA" />
+            <Input className="premium-input" {...register('cgpa')} placeholder="e.g. 8.5 or NA" />
             {errors.cgpa && <p className="text-sm text-destructive">{errors.cgpa.message}</p>}
           </div>
 
           <div className="space-y-2">
             <Label>Average Attendance *</Label>
-            <Input className="clay-input" {...register('attendance')} placeholder="e.g. 87%" />
+            <Input className="premium-input" {...register('attendance')} placeholder="e.g. 87%" />
             {errors.attendance && <p className="text-sm text-destructive">{errors.attendance.message}</p>}
           </div>
         </div>
@@ -398,7 +398,7 @@ export function ApplicationForm() {
         {watchBacklogs === 'Yes' && (
           <div className="space-y-2 mt-4">
             <Label>Mention Backlog Subjects *</Label>
-            <Textarea className="clay-input" {...register('backlog_subjects')} placeholder="List your backlog subjects" />
+            <Textarea className="premium-input" {...register('backlog_subjects')} placeholder="List your backlog subjects" />
             {errors.backlog_subjects && <p className="text-sm text-destructive">{errors.backlog_subjects.message}</p>}
           </div>
         )}
@@ -410,17 +410,17 @@ export function ApplicationForm() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
             <Label>GitHub URL</Label>
-            <Input className="clay-input" {...register('github')} placeholder="https://github.com/..." />
+            <Input className="premium-input" {...register('github')} placeholder="https://github.com/..." />
             {errors.github && <p className="text-sm text-destructive">{errors.github.message}</p>}
           </div>
           <div className="space-y-2">
             <Label>LinkedIn URL</Label>
-            <Input className="clay-input" {...register('linkedin')} placeholder="https://linkedin.com/in/..." />
+            <Input className="premium-input" {...register('linkedin')} placeholder="https://linkedin.com/in/..." />
             {errors.linkedin && <p className="text-sm text-destructive">{errors.linkedin.message}</p>}
           </div>
           <div className="space-y-2">
             <Label>Portfolio URL</Label>
-            <Input className="clay-input" {...register('portfolio')} placeholder="https://..." />
+            <Input className="premium-input" {...register('portfolio')} placeholder="https://..." />
             {errors.portfolio && <p className="text-sm text-destructive">{errors.portfolio.message}</p>}
           </div>
         </div>
@@ -432,30 +432,30 @@ export function ApplicationForm() {
         <div className="space-y-6">
           <div className="space-y-2">
             <Label>Why do you want to join the IT Board? *</Label>
-            <Textarea className="clay-input min-h-[100px]" {...register('why_join')} />
+            <Textarea className="premium-input min-h-[100px]" {...register('why_join')} />
             {errors.why_join && <p className="text-sm text-destructive">{errors.why_join.message}</p>}
           </div>
           
           <div className="space-y-2">
             <Label>Why should we choose you? *</Label>
-            <Textarea className="clay-input min-h-[100px]" {...register('why_choose_you')} />
+            <Textarea className="premium-input min-h-[100px]" {...register('why_choose_you')} />
             {errors.why_choose_you && <p className="text-sm text-destructive">{errors.why_choose_you.message}</p>}
           </div>
 
           <div className="space-y-2">
             <Label>Describe one leadership experience *</Label>
-            <Textarea className="clay-input min-h-[100px]" {...register('leadership_experience')} />
+            <Textarea className="premium-input min-h-[100px]" {...register('leadership_experience')} />
             {errors.leadership_experience && <p className="text-sm text-destructive">{errors.leadership_experience.message}</p>}
           </div>
 
           <div className="space-y-2">
             <Label>Hackathons (If any)</Label>
-            <Textarea className="clay-input" {...register('hackathons')} placeholder="List hackathons participated in or won" />
+            <Textarea className="premium-input" {...register('hackathons')} placeholder="List hackathons participated in or won" />
           </div>
 
           <div className="space-y-2">
             <Label>Projects</Label>
-            <Textarea className="clay-input" {...register('projects')} placeholder="Briefly describe 1-2 major projects" />
+            <Textarea className="premium-input" {...register('projects')} placeholder="Briefly describe 1-2 major projects" />
           </div>
 
           <div className="space-y-2">
@@ -465,7 +465,7 @@ export function ApplicationForm() {
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="clay-input w-full md:w-1/3"><SelectValue placeholder="Select Hours" /></SelectTrigger>
+                  <SelectTrigger className="premium-input w-full md:w-1/3"><SelectValue placeholder="Select Hours" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="2-4">2-4 Hours</SelectItem>
                     <SelectItem value="5-8">5-8 Hours</SelectItem>
@@ -521,19 +521,19 @@ export function ApplicationForm() {
               <>
                 <div className="space-y-2">
                   <Label>Vision for the club</Label>
-                  <Textarea className="clay-input" {...register('vision')} />
+                  <Textarea className="premium-input" {...register('vision')} />
                 </div>
                 <div className="space-y-2">
                   <Label>Future initiatives</Label>
-                  <Textarea className="clay-input" {...register('future_initiatives')} />
+                  <Textarea className="premium-input" {...register('future_initiatives')} />
                 </div>
                 <div className="space-y-2">
                   <Label>Conflict handling</Label>
-                  <Textarea className="clay-input" {...register('conflict_handling')} />
+                  <Textarea className="premium-input" {...register('conflict_handling')} />
                 </div>
                 <div className="space-y-2">
                   <Label>Leadership style</Label>
-                  <Textarea className="clay-input" {...register('leadership_style')} />
+                  <Textarea className="premium-input" {...register('leadership_style')} />
                 </div>
               </>
             )}
@@ -542,11 +542,11 @@ export function ApplicationForm() {
               <>
                 <div className="space-y-2">
                   <Label>Write a sample LinkedIn announcement</Label>
-                  <Textarea className="clay-input" {...register('linkedin_announcement')} />
+                  <Textarea className="premium-input" {...register('linkedin_announcement')} />
                 </div>
                 <div className="space-y-2">
                   <Label>How will you improve outreach?</Label>
-                  <Textarea className="clay-input" {...register('improve_outreach')} />
+                  <Textarea className="premium-input" {...register('improve_outreach')} />
                 </div>
               </>
             )}
@@ -554,7 +554,7 @@ export function ApplicationForm() {
             {watchRole === 'Technical Strategy Lead' && (
               <div className="space-y-2">
                 <Label>How would you improve the technical quality of club activities?</Label>
-                <Textarea className="clay-input" {...register('improve_technical_quality')} />
+                <Textarea className="premium-input" {...register('improve_technical_quality')} />
               </div>
             )}
 
@@ -562,11 +562,11 @@ export function ApplicationForm() {
               <>
                 <div className="space-y-2">
                   <Label>Describe one technical project</Label>
-                  <Textarea className="clay-input" {...register('tech_project')} />
+                  <Textarea className="premium-input" {...register('tech_project')} />
                 </div>
                 <div className="space-y-2">
                   <Label>GitHub experience</Label>
-                  <Textarea className="clay-input" {...register('github_experience')} />
+                  <Textarea className="premium-input" {...register('github_experience')} />
                 </div>
               </>
             )}
@@ -574,14 +574,14 @@ export function ApplicationForm() {
             {watchRole === 'Events & Operations Coordinator' && (
               <div className="space-y-2">
                 <Label>Plan a technical workshop (Outline the steps)</Label>
-                <Textarea className="clay-input min-h-[150px]" {...register('plan_workshop')} />
+                <Textarea className="premium-input min-h-[150px]" {...register('plan_workshop')} />
               </div>
             )}
 
             {watchRole === 'Community Engagement Coordinator' && (
               <div className="space-y-2">
                 <Label>How will you increase participation?</Label>
-                <Textarea className="clay-input" {...register('increase_participation')} />
+                <Textarea className="premium-input" {...register('increase_participation')} />
               </div>
             )}
 
@@ -589,11 +589,11 @@ export function ApplicationForm() {
               <>
                 <div className="space-y-2">
                   <Label>Portfolio Description</Label>
-                  <Textarea className="clay-input" {...register('design_portfolio')} />
+                  <Textarea className="premium-input" {...register('design_portfolio')} />
                 </div>
                 <div className="space-y-2">
                   <Label>Design tools you are proficient in</Label>
-                  <Input className="clay-input" {...register('design_tools')} placeholder="Figma, Photoshop, etc." />
+                  <Input className="premium-input" {...register('design_tools')} placeholder="Figma, Photoshop, etc." />
                 </div>
               </>
             )}
@@ -604,7 +604,7 @@ export function ApplicationForm() {
       {/* Section 6: Resume Upload */}
       <div className="space-y-6">
         <h3 className="text-2xl font-bold border-b pb-2">Resume Upload</h3>
-        <Card className="clay-card border-dashed border-2 border-primary/30">
+        <Card className="premium-card border-dashed border-2 border-primary/30">
           <CardContent className="pt-6 pb-8 text-center flex flex-col items-center">
             <UploadCloud className="w-12 h-12 text-primary mb-4" />
             <Label htmlFor="resume-upload" className="text-lg font-medium cursor-pointer text-primary hover:underline">
@@ -630,7 +630,7 @@ export function ApplicationForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="clay-btn w-full py-4 text-lg font-bold bg-primary text-white flex items-center justify-center gap-2 hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="premium-btn w-full py-4 text-lg font-bold bg-primary text-white flex items-center justify-center gap-2 hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isSubmitting ? (
           <>

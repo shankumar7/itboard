@@ -135,32 +135,32 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
       
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <div className="clay-card bg-white p-4 text-center">
+        <div className="premium-card bg-white p-4 text-center">
           <Users className="w-8 h-8 mx-auto text-primary mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.total}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Total</div>
         </div>
-        <div className="clay-card bg-white p-4 text-center">
+        <div className="premium-card bg-white p-4 text-center">
           <Clock className="w-8 h-8 mx-auto text-yellow-500 mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.pending}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Pending</div>
         </div>
-        <div className="clay-card bg-white p-4 text-center">
+        <div className="premium-card bg-white p-4 text-center">
           <UserCheck className="w-8 h-8 mx-auto text-green-500 mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.shortlisted}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Shortlisted</div>
         </div>
-        <div className="clay-card bg-white p-4 text-center">
+        <div className="premium-card bg-white p-4 text-center">
           <XCircle className="w-8 h-8 mx-auto text-red-500 mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.rejected}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Rejected</div>
         </div>
-        <div className="clay-card bg-white p-4 text-center">
+        <div className="premium-card bg-white p-4 text-center">
           <UserCircle className="w-8 h-8 mx-auto text-indigo-500 mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.senior}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Senior</div>
         </div>
-        <div className="clay-card bg-white p-4 text-center">
+        <div className="premium-card bg-white p-4 text-center">
           <UserCircle className="w-8 h-8 mx-auto text-blue-400 mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.junior}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Junior</div>
@@ -168,12 +168,12 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
       </div>
 
       {/* Filters & Actions */}
-      <div className="clay-card bg-white p-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="premium-card bg-white p-6 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto flex-1">
           <div className="relative w-full md:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input 
-              className="clay-input pl-9" 
+              className="premium-input pl-9" 
               placeholder="Search Name or Roll No..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -181,7 +181,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           </div>
           
           <Select value={filterStatus} onValueChange={(val) => setFilterStatus(val || 'All')}>
-            <SelectTrigger className="clay-input w-full md:w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+            <SelectTrigger className="premium-input w-full md:w-40"><SelectValue placeholder="Status" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Statuses</SelectItem>
               <SelectItem value="Pending">Pending</SelectItem>
@@ -193,7 +193,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           </Select>
           
           <Select value={filterBranch} onValueChange={(val) => setFilterBranch(val || 'All')}>
-            <SelectTrigger className="clay-input w-full md:w-40"><SelectValue placeholder="Branch" /></SelectTrigger>
+            <SelectTrigger className="premium-input w-full md:w-40"><SelectValue placeholder="Branch" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Branches</SelectItem>
               <SelectItem value="CSE">CSE</SelectItem>
@@ -205,7 +205,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           </Select>
 
           <Select value={filterClub} onValueChange={(val) => setFilterClub(val || 'All')}>
-            <SelectTrigger className="clay-input w-full md:w-48"><SelectValue placeholder="Club" /></SelectTrigger>
+            <SelectTrigger className="premium-input w-full md:w-48"><SelectValue placeholder="Club" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Clubs</SelectItem>
               <SelectItem value="League of Coders">League of Coders</SelectItem>
@@ -217,14 +217,14 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
         
         <button 
           onClick={handleExportCSV}
-          className="clay-btn bg-indigo-600 text-white px-6 py-2.5 flex items-center gap-2 font-medium hover:bg-indigo-700 w-full md:w-auto"
+          className="premium-btn bg-indigo-600 text-white px-6 py-2.5 flex items-center gap-2 font-medium hover:bg-indigo-700 w-full md:w-auto"
         >
           <Download className="w-4 h-4" /> Export CSV
         </button>
       </div>
 
       {/* Data Table */}
-      <div className="clay-card bg-white overflow-hidden">
+      <div className="premium-card bg-white overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader className="bg-slate-50/50">
@@ -339,7 +339,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus(selectedApp.status)}
-                    className="clay-btn bg-slate-200 text-slate-800 px-4 py-2 text-sm font-medium hover:bg-slate-300 w-full"
+                    className="premium-btn bg-slate-200 text-slate-800 px-4 py-2 text-sm font-medium hover:bg-slate-300 w-full"
                   >
                     Save Notes
                   </button>
