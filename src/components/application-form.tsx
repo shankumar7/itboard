@@ -25,12 +25,12 @@ const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   roll_number: z.string().min(5, 'Invalid roll number'),
   college_email: z.string().email('Invalid email'),
-  phone: z.string().min(10, 'Invalid phone number'),
+  phone: z.string().regex(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
   year: z.enum(['Second Year', 'Third Year']),
   branch: z.string().min(1, 'Branch is required'),
   cgpa: z.string().min(1, 'CGPA is required'),
   backlogs: z.enum(['Yes', 'No']),
-  backlog_subjects: z.string().optional(),
+  backlog_subjects: z.string().max(500, 'Maximum 500 characters allowed').optional(),
   attendance: z.string().min(1, 'Attendance is required'),
   club: z.string().optional(),
   role: z.string().min(1, 'Role is required'),
@@ -40,25 +40,25 @@ const formSchema = z.object({
   linkedin: z.string().url('Invalid URL').optional().or(z.literal('')),
   portfolio: z.string().url('Invalid URL').optional().or(z.literal('')),
 
-  // General Answers
-  hackathons: z.string().optional(),
-  why_join: z.string().min(10, 'Please provide more details'),
-  why_choose_you: z.string().min(10, 'Please provide more details'),
+  // General Answers (Max 500 characters to optimize DB storage)
+  hackathons: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  why_join: z.string().min(10, 'Please provide more details').max(500, 'Maximum 500 characters allowed'),
+  why_choose_you: z.string().min(10, 'Please provide more details').max(500, 'Maximum 500 characters allowed'),
 
-  // Role specific (all optional, but we can validate conditionally)
-  vision: z.string().optional(),
-  future_initiatives: z.string().optional(),
-  conflict_handling: z.string().optional(),
-  leadership_style: z.string().optional(),
-  linkedin_announcement: z.string().optional(),
-  improve_outreach: z.string().optional(),
-  improve_technical_quality: z.string().optional(),
-  tech_project: z.string().optional(),
-  github_experience: z.string().optional(),
-  plan_workshop: z.string().optional(),
-  increase_participation: z.string().optional(),
-  design_portfolio: z.string().optional(),
-  design_tools: z.string().optional(),
+  // Role specific
+  vision: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  future_initiatives: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  conflict_handling: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  leadership_style: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  linkedin_announcement: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  improve_outreach: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  improve_technical_quality: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  tech_project: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  github_experience: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  plan_workshop: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  increase_participation: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  design_portfolio: z.string().max(500, 'Maximum 500 characters allowed').optional(),
+  design_tools: z.string().max(500, 'Maximum 500 characters allowed').optional(),
 }).refine((data) => {
   if (data.backlogs === 'Yes' && (!data.backlog_subjects || data.backlog_subjects.trim() === '')) {
     return false;
@@ -202,7 +202,7 @@ export function ApplicationForm() {
         name: data.name,
         roll_number: data.roll_number,
         college_email: data.college_email,
-        phone: data.phone,
+        phone: data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone}`,
         year: data.year,
         branch: data.branch,
         cgpa: data.cgpa,
@@ -372,7 +372,21 @@ export function ApplicationForm() {
           </div>
           <div className="space-y-2">
             <Label>Phone Number *</Label>
-            <Input className="premium-input" {...register('phone')} placeholder="9876543210" />
+            <div className="flex items-center gap-2">
+              <div className="h-12 px-3.5 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md flex items-center justify-center text-sm font-bold text-primary select-none shrink-0">
+                +91
+              </div>
+              <Input 
+                className="premium-input flex-1" 
+                {...register('phone')} 
+                maxLength={10} 
+                placeholder="9876543210" 
+                type="tel"
+                onInput={(e) => {
+                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').slice(0, 10);
+                }}
+              />
+            </div>
             {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
           </div>
         </div>
@@ -528,20 +542,29 @@ export function ApplicationForm() {
         <h3 className="text-2xl font-bold border-b pb-2">General Questions</h3>
         <div className="space-y-6">
           <div className="space-y-2">
-            <Label>Why do you want to join the IT Board? *</Label>
-            <Textarea className="premium-input min-h-[100px]" {...register('why_join')} />
+            <div className="flex justify-between items-center">
+              <Label>Why do you want to join the IT Board? *</Label>
+              <span className="text-[11px] text-white/40">Max 500 chars</span>
+            </div>
+            <Textarea className="premium-input min-h-[100px]" maxLength={500} {...register('why_join')} />
             {errors.why_join && <p className="text-sm text-destructive">{errors.why_join.message}</p>}
           </div>
 
           <div className="space-y-2">
-            <Label>Why should we choose you? *</Label>
-            <Textarea className="premium-input min-h-[100px]" {...register('why_choose_you')} />
+            <div className="flex justify-between items-center">
+              <Label>Why should we choose you? *</Label>
+              <span className="text-[11px] text-white/40">Max 500 chars</span>
+            </div>
+            <Textarea className="premium-input min-h-[100px]" maxLength={500} {...register('why_choose_you')} />
             {errors.why_choose_you && <p className="text-sm text-destructive">{errors.why_choose_you.message}</p>}
           </div>
 
           <div className="space-y-2">
-            <Label>Hackathons (If any)</Label>
-            <Textarea className="premium-input" {...register('hackathons')} placeholder="List hackathons participated in or won" />
+            <div className="flex justify-between items-center">
+              <Label>Hackathons (If any)</Label>
+              <span className="text-[11px] text-white/40">Max 500 chars</span>
+            </div>
+            <Textarea className="premium-input" maxLength={500} {...register('hackathons')} placeholder="List hackathons participated in or won" />
           </div>
         </div>
       </div>
