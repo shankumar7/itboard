@@ -1,5 +1,7 @@
 'use client'
 
+import { submitApplicationAction } from '@/app/actions/submit-application'
+
 import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -109,6 +111,22 @@ export function ApplicationForm() {
   const { register, handleSubmit, watch, control, formState: { errors }, setValue } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: 'onSubmit',
+    defaultValues: {
+      name: '',
+      roll_number: '',
+      college_email: '',
+      phone: '',
+      cgpa: '',
+      attendance: '',
+      backlogs: 'No',
+      backlog_subjects: '',
+      github: '',
+      linkedin: '',
+      portfolio: '',
+      hackathons: '',
+      why_join: '',
+      why_choose_you: '',
+    }
   })
 
   const watchRole = watch('role')
@@ -174,8 +192,8 @@ export function ApplicationForm() {
         design_tools: data.design_tools
       }
 
-      // 3. Save to Database
-      const { error: dbError } = await supabase.from('applications').insert({
+      // Save via server action (bypasses RLS policy restriction securely)
+      const res = await submitApplicationAction({
         name: data.name,
         roll_number: data.roll_number,
         college_email: data.college_email,
@@ -194,7 +212,7 @@ export function ApplicationForm() {
         answers: answers
       })
 
-      if (dbError) throw new Error("Application save failed: " + dbError.message)
+      if (!res.success) throw new Error(res.error || "Application save failed")
 
       setIsSubmitted(true)
       toast.success("Application submitted successfully!")
@@ -437,95 +455,7 @@ export function ApplicationForm() {
         </div>
       </div>
 
-      {/* Section 5: Role Specific Questions */}
-      {watchRole && (
-        <div className="space-y-6">
-          <h3 className="text-2xl font-bold border-b border-white/10 pb-2 text-primary">Role Specific Questions</h3>
-          <div className="space-y-6 p-6 bg-white/[0.03] rounded-2xl border border-white/5">
-            
-            {(watchRole.includes('Head') || watchRole.includes('Vice President')) && (
-              <>
-                <div className="space-y-2">
-                  <Label>Vision for the club</Label>
-                  <Textarea className="premium-input" {...register('vision')} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Future initiatives</Label>
-                  <Textarea className="premium-input" {...register('future_initiatives')} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Conflict handling</Label>
-                  <Textarea className="premium-input" {...register('conflict_handling')} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Leadership style</Label>
-                  <Textarea className="premium-input" {...register('leadership_style')} />
-                </div>
-              </>
-            )}
 
-            {watchRole === 'PR & Outreach Lead' && (
-              <>
-                <div className="space-y-2">
-                  <Label>Write a sample LinkedIn announcement</Label>
-                  <Textarea className="premium-input" {...register('linkedin_announcement')} />
-                </div>
-                <div className="space-y-2">
-                  <Label>How will you improve outreach?</Label>
-                  <Textarea className="premium-input" {...register('improve_outreach')} />
-                </div>
-              </>
-            )}
-
-            {watchRole === 'Technical Strategy Lead' && (
-              <div className="space-y-2">
-                <Label>How would you improve the technical quality of club activities?</Label>
-                <Textarea className="premium-input" {...register('improve_technical_quality')} />
-              </div>
-            )}
-
-            {watchRole === 'Technical Coordinator' && (
-              <>
-                <div className="space-y-2">
-                  <Label>Describe one technical project</Label>
-                  <Textarea className="premium-input" {...register('tech_project')} />
-                </div>
-                <div className="space-y-2">
-                  <Label>GitHub experience</Label>
-                  <Textarea className="premium-input" {...register('github_experience')} />
-                </div>
-              </>
-            )}
-
-            {watchRole === 'Events & Operations Coordinator' && (
-              <div className="space-y-2">
-                <Label>Plan a technical workshop (Outline the steps)</Label>
-                <Textarea className="premium-input min-h-[150px]" {...register('plan_workshop')} />
-              </div>
-            )}
-
-            {watchRole === 'Community Engagement Coordinator' && (
-              <div className="space-y-2">
-                <Label>How will you increase participation?</Label>
-                <Textarea className="premium-input" {...register('increase_participation')} />
-              </div>
-            )}
-
-            {watchRole === 'Design & Media Coordinator' && (
-              <>
-                <div className="space-y-2">
-                  <Label>Portfolio Description</Label>
-                  <Textarea className="premium-input" {...register('design_portfolio')} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Design tools you are proficient in</Label>
-                  <Input className="premium-input" {...register('design_tools')} placeholder="Figma, Photoshop, etc." />
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
 
 
 

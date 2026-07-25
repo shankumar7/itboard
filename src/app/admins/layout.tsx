@@ -50,54 +50,41 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0a0a0a] text-white">
-      {/* Sidebar for Logged In Admin */}
-      <aside className="w-64 bg-[#0d0d0d] border-r border-white/10 flex flex-col justify-between p-6 shrink-0">
-        <div className="space-y-8">
+    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col">
+      {/* Top Navbar Header for Admin */}
+      <header className="border-b border-white/10 bg-[#0d0d0d]/90 backdrop-blur-xl sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shadow-[0_0_20px_rgba(245,197,24,0.15)]">
               <Shield className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white uppercase tracking-wider">Admin Portal</h2>
-              <p className="text-[10px] text-white/30 font-medium">IT Board Dashboard</p>
+              <h1 className="text-base font-black text-white tracking-tight leading-none">Admin Portal</h1>
+              <p className="text-[10px] text-white/40 uppercase tracking-widest font-medium mt-1">IT Board CMRCET</p>
             </div>
           </div>
 
-          <nav className="space-y-1">
-            <Link
-              href="/admins"
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                pathname === '/admins' ? 'bg-primary/10 text-primary border border-primary/20' : 'text-white/50 hover:bg-white/5 hover:text-white'
-              }`}
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/" 
+              className="text-xs text-white/50 hover:text-white flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-colors"
             >
-              <LayoutDashboard className="w-4 h-4" />
-              Dashboard
+              <ChevronLeft className="w-4 h-4" /> Main Site
             </Link>
-          </nav>
-        </div>
-
-        <div className="pt-6 border-t border-white/10 space-y-4">
-          <div className="px-2">
-            <p className="text-[10px] text-white/30 font-bold uppercase tracking-wider">Logged In As</p>
-            <p className="text-xs text-white/70 truncate font-medium mt-0.5">{user?.email}</p>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-rose-400 hover:bg-rose-500/10 border border-rose-500/20 hover:border-rose-500/40 transition-all"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </button>
           </div>
-
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/10 border border-rose-500/10 hover:border-rose-500/30 transition-all"
-          >
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </button>
         </div>
-      </aside>
+      </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 md:p-10 overflow-auto bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
+      <main className="flex-1 p-4 sm:p-6 md:p-10 max-w-7xl mx-auto w-full">
+        {children}
       </main>
     </div>
   )

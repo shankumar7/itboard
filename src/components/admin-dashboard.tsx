@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/client'
 import { toast } from 'sonner'
 import { 
   Users, UserCheck, Clock, XCircle, Search, Download, 
-  ExternalLink, FileText, ChevronRight, UserCircle
+  ExternalLink, FileText, ChevronRight, UserCircle, Mail, Loader2
 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -287,131 +287,220 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
 
       {/* Sheet / Drawer for Details */}
       <Sheet open={!!selectedApp} onOpenChange={(open) => !open && setSelectedApp(null)}>
-        <SheetContent className="sm:max-w-xl overflow-y-auto w-[90vw] bg-[#121212] border-l border-white/10 text-white">
-          <SheetHeader className="mb-6">
-            <SheetTitle className="text-2xl font-black text-white">{selectedApp?.name}</SheetTitle>
-            <SheetDescription className="text-white/50 text-xs">
-              {selectedApp?.roll_number} • {selectedApp?.branch} • {selectedApp?.year}
-            </SheetDescription>
-          </SheetHeader>
-          
+        <SheetContent className="sm:max-w-2xl overflow-y-auto w-[92vw] bg-[#0d0d0d] border-l border-white/10 text-white p-6 sm:p-8">
           {selectedApp && (
-            <div className="space-y-8 pb-20">
+            <div className="space-y-8 pb-16">
               
-              {/* Actions & Status */}
-              <div className="glass-card p-5 border-white/10 space-y-4">
-                <h4 className="font-bold text-sm text-white flex items-center gap-2 uppercase tracking-wider"><UserCheck className="w-4 h-4 text-primary" /> Admin Actions</h4>
-                <div className="flex flex-wrap gap-2">
-                  <button 
-                    disabled={isUpdating}
-                    onClick={() => handleUpdateStatus('Shortlisted')}
-                    className="bg-sky-500/15 text-sky-400 border border-sky-500/30 hover:bg-sky-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-                  >Shortlist</button>
-                  <button 
-                    disabled={isUpdating}
-                    onClick={() => handleUpdateStatus('Interview Scheduled')}
-                    className="bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-                  >Interview</button>
-                  <button 
-                    disabled={isUpdating}
-                    onClick={() => handleUpdateStatus('Selected')}
-                    className="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-                  >Select</button>
-                  <button 
-                    disabled={isUpdating}
-                    onClick={() => handleUpdateStatus('Rejected')}
-                    className="bg-rose-500/15 text-rose-400 border border-rose-500/30 hover:bg-rose-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-                  >Reject</button>
-                  <button 
-                    disabled={isUpdating}
-                    onClick={() => handleUpdateStatus('Pending')}
-                    className="bg-amber-500/15 text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
-                  >Pending</button>
+              {/* Header Dossier Banner */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-6 border-b border-white/10">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center text-primary text-2xl font-black shrink-0 shadow-[0_0_30px_rgba(245,197,24,0.15)]">
+                  {selectedApp.name.charAt(0).toUpperCase()}
                 </div>
                 
-                <div className="space-y-2 mt-4 pt-4 border-t border-white/10">
-                  <label className="text-xs font-bold uppercase tracking-wider text-white/50">Admin Private Notes</label>
+                <div className="flex-1 space-y-1.5">
+                  <div className="flex items-center flex-wrap gap-3">
+                    <h2 className="text-2xl font-black text-white tracking-tight">{selectedApp.name}</h2>
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold border inline-flex items-center gap-1.5 ${
+                      selectedApp.status === 'Pending' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                      selectedApp.status === 'Shortlisted' ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' :
+                      selectedApp.status === 'Interview Scheduled' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
+                      selectedApp.status === 'Selected' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                      'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                    }`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                      {selectedApp.status}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 text-xs text-white/50 font-medium">
+                    <span className="bg-white/5 px-2.5 py-1 rounded-md border border-white/10 font-mono text-white/80">{selectedApp.roll_number}</span>
+                    <span className="bg-white/5 px-2.5 py-1 rounded-md border border-white/10">{selectedApp.branch}</span>
+                    <span className="bg-white/5 px-2.5 py-1 rounded-md border border-white/10">{selectedApp.year}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Admin Evaluation & Actions Panel */}
+              <div className="glass-card p-6 border-white/10 space-y-5 bg-white/[0.02]">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-xs text-white/60 uppercase tracking-widest flex items-center gap-2">
+                    <UserCheck className="w-4 h-4 text-primary" /> Candidate Decision
+                  </h3>
+                  {isUpdating && <Loader2 className="w-4 h-4 animate-spin text-primary" />}
+                </div>
+
+                {/* Status Switcher Buttons */}
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {[
+                    { key: 'Shortlisted', label: 'Shortlist', color: 'sky' },
+                    { key: 'Interview Scheduled', label: 'Interview', color: 'indigo' },
+                    { key: 'Selected', label: 'Select', color: 'emerald' },
+                    { key: 'Rejected', label: 'Reject', color: 'rose' },
+                    { key: 'Pending', label: 'Pending', color: 'amber' },
+                  ].map((s) => {
+                    const isCurrent = selectedApp.status === s.key
+                    return (
+                      <button 
+                        key={s.key}
+                        disabled={isUpdating}
+                        onClick={() => handleUpdateStatus(s.key)}
+                        className={`py-2 px-3 rounded-xl text-xs font-bold transition-all border ${
+                          isCurrent 
+                            ? 'bg-primary text-black border-primary shadow-[0_0_15px_rgba(245,197,24,0.3)]' 
+                            : 'bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white'
+                        }`}
+                      >
+                        {s.label}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Private Notes */}
+                <div className="space-y-2.5 pt-4 border-t border-white/10">
+                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block">Admin Internal Notes</label>
                   <Textarea 
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Add private notes about this candidate..."
-                    className="premium-input min-h-[80px]"
+                    placeholder="Add private evaluation notes about this candidate..."
+                    className="premium-input min-h-[90px] text-sm"
                   />
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus(selectedApp.status)}
-                    className="btn-ghost w-full py-2.5 text-xs font-bold uppercase tracking-wider mt-2"
+                    className="btn-primary w-full py-2.5 text-xs font-bold uppercase tracking-wider"
                   >
                     Save Notes
                   </button>
                 </div>
               </div>
 
-              {/* Core Details */}
-              <div className="grid grid-cols-2 gap-y-5 gap-x-6 text-sm">
-                <div>
-                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Email</div>
-                  <div className="font-semibold text-white truncate" title={selectedApp.college_email}>{selectedApp.college_email}</div>
-                  {selectedApp.personal_email && <div className="text-white/60 text-xs truncate" title={selectedApp.personal_email}>{selectedApp.personal_email}</div>}
+              {/* Candidate Info Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Contact Card */}
+                <div className="glass-card p-5 border-white/10 space-y-3">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 flex items-center gap-1.5">
+                    <Mail className="w-3.5 h-3.5 text-primary" /> Contact Details
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-xs text-white/40">College Email</p>
+                      <p className="text-sm font-semibold text-white truncate" title={selectedApp.college_email}>{selectedApp.college_email}</p>
+                    </div>
+                    {selectedApp.personal_email && selectedApp.personal_email !== selectedApp.college_email && (
+                      <div>
+                        <p className="text-xs text-white/40">Personal Email</p>
+                        <p className="text-sm text-white/80 truncate" title={selectedApp.personal_email}>{selectedApp.personal_email}</p>
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-xs text-white/40">Phone Number</p>
+                      <p className="text-sm font-semibold text-white font-mono">{selectedApp.phone}</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Phone</div>
-                  <div className="font-semibold text-white">{selectedApp.phone}</div>
+
+                {/* Application Role Card */}
+                <div className="glass-card p-5 border-white/10 space-y-3">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5 text-primary" /> Preference & Role
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-xs text-white/40">Club Preference</p>
+                      <p className="text-sm font-bold text-white">{selectedApp.club}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-white/40">Role Applying For</p>
+                      <p className="text-sm font-black text-primary">{selectedApp.role}</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Club & Role</div>
-                  <div className="font-semibold text-white">{selectedApp.club}</div>
-                  <div className="font-bold text-primary">{selectedApp.role}</div>
-                </div>
-                <div>
-                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Academics</div>
-                  <div className="font-semibold text-white">CGPA: {selectedApp.cgpa}</div>
-                  <div className="text-white/70 text-xs">Attendance: {selectedApp.attendance}</div>
-                  <div className="text-xs font-bold text-rose-400 mt-0.5">
-                    {selectedApp.backlogs ? `Backlogs: ${selectedApp.backlog_subjects}` : 'No Backlogs'}
+
+                {/* Academic Record Card */}
+                <div className="glass-card p-5 border-white/10 space-y-3 md:col-span-2">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-primary" /> Academic Standing
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-xs text-white/40">CGPA</p>
+                      <p className="text-base font-black text-white">{selectedApp.cgpa}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-white/40">Attendance</p>
+                      <p className="text-base font-bold text-white">{selectedApp.attendance}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-white/40">Backlogs Status</p>
+                      <p className={`text-xs font-bold ${selectedApp.backlogs ? 'text-rose-400' : 'text-emerald-400'}`}>
+                        {selectedApp.backlogs ? `Yes (${selectedApp.backlog_subjects})` : 'No Backlogs'}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Links */}
-              <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
-                <a href={selectedApp.resume_url} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-4 py-2 rounded-xl hover:bg-primary/20 transition-all">
-                  <FileText className="w-4 h-4" /> View Resume
-                </a>
-                {selectedApp.github && (
-                  <a href={selectedApp.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-medium text-white/70 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
-                    <ExternalLink className="w-4 h-4" /> GitHub
-                  </a>
-                )}
-                {selectedApp.linkedin && (
-                  <a href={selectedApp.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-medium text-white/70 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
-                    <ExternalLink className="w-4 h-4" /> LinkedIn
-                  </a>
-                )}
-                {selectedApp.portfolio && (
-                  <a href={selectedApp.portfolio} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-medium text-white/70 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
-                    <ExternalLink className="w-4 h-4" /> Portfolio
-                  </a>
-                )}
-              </div>
-
-              {/* Answers */}
-              <div className="space-y-6 pt-4 border-t border-white/10">
-                <h4 className="font-bold text-base text-white uppercase tracking-wider">Application Answers</h4>
-                
-                <div className="space-y-4">
-                  {Object.entries(selectedApp.answers || {}).map(([key, value]) => {
-                    if (!value) return null;
-                    const label = key.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-                    return (
-                      <div key={key} className="glass-card p-4 border-white/10">
-                        <div className="text-xs font-bold text-primary uppercase tracking-wider mb-1.5">{label}</div>
-                        <div className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed">{value as string}</div>
-                      </div>
-                    )
-                  })}
+              {/* Links Action Bar */}
+              {(selectedApp.github || selectedApp.linkedin || selectedApp.portfolio) && (
+                <div className="glass-card p-5 border-white/10 space-y-3">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">Applicant Profiles</p>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedApp.github && (
+                      <a 
+                        href={selectedApp.github.startsWith('http') ? selectedApp.github : `https://${selectedApp.github}`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex items-center gap-2 text-xs font-semibold text-white/80 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" /> GitHub Profile
+                      </a>
+                    )}
+                    {selectedApp.linkedin && (
+                      <a 
+                        href={selectedApp.linkedin.startsWith('http') ? selectedApp.linkedin : `https://${selectedApp.linkedin}`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex items-center gap-2 text-xs font-semibold text-white/80 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 text-sky-400" /> LinkedIn Profile
+                      </a>
+                    )}
+                    {selectedApp.portfolio && (
+                      <a 
+                        href={selectedApp.portfolio.startsWith('http') ? selectedApp.portfolio : `https://${selectedApp.portfolio}`} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="flex items-center gap-2 text-xs font-semibold text-white/80 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 text-amber-400" /> Portfolio Website
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Application Responses */}
+              {selectedApp.answers && Object.keys(selectedApp.answers).length > 0 && (
+                <div className="space-y-4 pt-2">
+                  <h3 className="font-black text-sm text-white uppercase tracking-widest border-b border-white/10 pb-3">
+                    Application Dossier Answers
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    {Object.entries(selectedApp.answers).map(([key, value]) => {
+                      if (!value) return null;
+                      const label = key.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+                      return (
+                        <div key={key} className="glass-card p-5 border-white/10 space-y-2">
+                          <div className="text-xs font-bold text-primary uppercase tracking-wider">{label}</div>
+                          <div className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed">{value as string}</div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
               
             </div>
           )}
