@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { createClient } from '@/utils/supabase/client'
 import { toast } from 'sonner'
-import { Loader2, UploadCloud } from 'lucide-react'
+import { Loader2, UploadCloud, Send } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -254,7 +254,7 @@ export function ApplicationForm() {
               rel="noopener noreferrer" 
               className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity"
             >
-              📸 Follow @itboard_cmrcet ↗
+              Follow @itboard_cmrcet ↗
             </a>
             <a 
               href="https://www.instagram.com/student_council_cmrcet/" 
@@ -262,7 +262,7 @@ export function ApplicationForm() {
               rel="noopener noreferrer" 
               className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-colors"
             >
-              📸 Follow @student_council_cmrcet ↗
+              Follow @student_council_cmrcet ↗
             </a>
           </div>
         </div>
@@ -288,7 +288,7 @@ export function ApplicationForm() {
             rel="noopener noreferrer" 
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity"
           >
-            📸 Follow @itboard_cmrcet ↗
+            Follow @itboard_cmrcet ↗
           </a>
           <a 
             href="https://www.instagram.com/student_council_cmrcet/" 
@@ -296,7 +296,7 @@ export function ApplicationForm() {
             rel="noopener noreferrer" 
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-colors"
           >
-            📸 Follow @student_council_cmrcet ↗
+            Follow @student_council_cmrcet ↗
           </a>
         </div>
       </div>
@@ -503,15 +503,17 @@ export function ApplicationForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="premium-btn w-full py-4 text-lg font-bold bg-primary text-white flex items-center justify-center gap-2 hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="w-full py-4 px-8 rounded-2xl text-base font-extrabold bg-primary text-black flex items-center justify-center gap-2 hover:bg-primary/95 hover:shadow-[0_0_35px_rgba(245,197,24,0.4)] disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 uppercase tracking-widest shadow-[0_0_25px_rgba(245,197,24,0.25)]"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="w-6 h-6 animate-spin" />
-            Submitting...
+            <Loader2 className="w-5 h-5 animate-spin" />
+            Submitting Application...
           </>
         ) : (
-          'Submit Application'
+          <>
+            Submit Application <Send className="w-4 h-4" />
+          </>
         )}
       </button>
 

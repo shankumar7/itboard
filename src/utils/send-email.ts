@@ -65,10 +65,10 @@ export async function sendConfirmationEmail(payload: ApplicationEmailPayload) {
             </p>
             <div style="margin-bottom: 10px;">
               <a href="https://www.instagram.com/itboard_cmrcet/" target="_blank" style="display: block; background: #f5c518; color: #0a0a0a; text-decoration: none; font-weight: 800; padding: 12px 18px; border-radius: 10px; font-size: 13px; text-align: center; margin-bottom: 8px;">
-                📸 Follow @itboard_cmrcet
+                Follow @itboard_cmrcet
               </a>
               <a href="https://www.instagram.com/student_council_cmrcet/" target="_blank" style="display: block; background: rgba(255,255,255,0.08); color: #ffffff; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 10px; font-size: 13px; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
-                📸 Follow @student_council_cmrcet
+                Follow @student_council_cmrcet
               </a>
             </div>
           </div>
