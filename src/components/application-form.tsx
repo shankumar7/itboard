@@ -8,7 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { createClient } from '@/utils/supabase/client'
 import { toast } from 'sonner'
-import { Loader2, UploadCloud, Send } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Loader2, UploadCloud, Send, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -33,17 +34,17 @@ const formSchema = z.object({
   attendance: z.string().min(1, 'Attendance is required'),
   club: z.string().optional(),
   role: z.string().min(1, 'Role is required'),
-  
+
   // URLs
   github: z.string().url('Invalid URL').optional().or(z.literal('')),
   linkedin: z.string().url('Invalid URL').optional().or(z.literal('')),
   portfolio: z.string().url('Invalid URL').optional().or(z.literal('')),
-  
+
   // General Answers
   hackathons: z.string().optional(),
   why_join: z.string().min(10, 'Please provide more details'),
   why_choose_you: z.string().min(10, 'Please provide more details'),
-  
+
   // Role specific (all optional, but we can validate conditionally)
   vision: z.string().optional(),
   future_initiatives: z.string().optional(),
@@ -96,9 +97,9 @@ const FILLED_ROLES = [
 
 const ALL_BRANCHES = ['CSE', 'CSM', 'CSD', 'ECE', 'EEE/MECH/CIVIL'];
 const SKILLS = [
-  'Leadership', 'Programming', 'Web Development', 'AI/ML', 
-  'Public Speaking', 'Event Management', 'Graphic Design', 
-  'Video Editing', 'Communication', 'Problem Solving', 
+  'Leadership', 'Programming', 'Web Development', 'AI/ML',
+  'Public Speaking', 'Event Management', 'Graphic Design',
+  'Video Editing', 'Communication', 'Problem Solving',
   'Team Management', 'Social Media'
 ];
 
@@ -107,6 +108,7 @@ export function ApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitStep, setSubmitStep] = useState('Validating candidate details...')
 
   const { register, handleSubmit, watch, control, formState: { errors }, setValue } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -170,30 +172,32 @@ export function ApplicationForm() {
   }
 
   const onSubmit = async (data: FormValues) => {
-    setIsSubmitting(true)
     try {
-      // Prepare JSON answers
-      const answers = {
-        hackathons: data.hackathons,
+      setIsSubmitting(true)
+      setSubmitStep('Validating application details...')
+      await new Promise(r => setTimeout(r, 600))
+
+      setSubmitStep('Securing payload & storing in IT Board database...')
+      
+      const answers: Record<string, string> = {
         why_join: data.why_join,
         why_choose_you: data.why_choose_you,
-        // Optional role specific
-        vision: data.vision,
-        future_initiatives: data.future_initiatives,
-        conflict_handling: data.conflict_handling,
-        leadership_style: data.leadership_style,
-        linkedin_announcement: data.linkedin_announcement,
-        improve_outreach: data.improve_outreach,
-        improve_technical_quality: data.improve_technical_quality,
-        tech_project: data.tech_project,
-        github_experience: data.github_experience,
-        plan_workshop: data.plan_workshop,
-        increase_participation: data.increase_participation,
-        design_portfolio: data.design_portfolio,
-        design_tools: data.design_tools
+        hackathons: data.hackathons || '',
+        vision: data.vision || '',
+        future_initiatives: data.future_initiatives || '',
+        conflict_handling: data.conflict_handling || '',
+        leadership_style: data.leadership_style || '',
+        linkedin_announcement: data.linkedin_announcement || '',
+        improve_outreach: data.improve_outreach || '',
+        improve_technical_quality: data.improve_technical_quality || '',
+        tech_project: data.tech_project || '',
+        github_experience: data.github_experience || '',
+        plan_workshop: data.plan_workshop || '',
+        increase_participation: data.increase_participation || '',
+        design_portfolio: data.design_portfolio || '',
+        design_tools: data.design_tools || ''
       }
 
-      // Save via server action (bypasses RLS policy restriction securely)
       const res = await submitApplicationAction({
         name: data.name,
         roll_number: data.roll_number,
@@ -213,6 +217,9 @@ export function ApplicationForm() {
         answers: answers
       })
 
+      setSubmitStep('Dispatching confirmation email to inbox...')
+      await new Promise(r => setTimeout(r, 700))
+
       if (!res.success) throw new Error(res.error || "Application save failed")
 
       setIsSubmitted(true)
@@ -224,13 +231,56 @@ export function ApplicationForm() {
     }
   }
 
+  if (isSubmitting) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="py-16 px-4 text-center space-y-6 max-w-md mx-auto relative overflow-hidden"
+      >
+        {/* Glow ambient background */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-pulse pointer-events-none" />
+
+        {/* Animated Loader */}
+        <div className="relative z-10 w-24 h-24 mx-auto flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border-4 border-primary/20 animate-ping opacity-30" />
+          <div className="absolute inset-0 rounded-full border-4 border-t-primary border-r-transparent border-b-primary/40 border-l-transparent animate-spin" />
+          <Sparkles className="w-8 h-8 text-primary animate-pulse" />
+        </div>
+
+        <div className="relative z-10 space-y-2">
+          <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">Submitting Application...</h3>
+          <p className="text-xs sm:text-sm text-primary font-semibold tracking-wide animate-pulse">{submitStep}</p>
+        </div>
+
+        {/* Animated Progress Bar */}
+        <div className="relative z-10 w-full h-2 bg-white/10 rounded-full overflow-hidden">
+          <motion.div 
+            className="h-full bg-gradient-to-r from-amber-500 via-primary to-yellow-300"
+            initial={{ width: '15%' }}
+            animate={{ width: '92%' }}
+            transition={{ duration: 2.2, ease: 'easeInOut' }}
+          />
+        </div>
+
+        <div className="relative z-10 text-[11px] text-white/40 font-medium flex items-center justify-center gap-1.5 pt-2">
+          <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+          <span>Secure encrypted submission to IT Board</span>
+        </div>
+      </motion.div>
+    )
+  }
+
   if (isSubmitted) {
     return (
-      <div className="text-center py-12 px-4 space-y-6">
-        <div className="w-20 h-20 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full flex items-center justify-center mx-auto">
-          <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="text-center py-12 px-4 space-y-6"
+      >
+        <div className="w-20 h-20 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(34,197,94,0.2)]">
+          <CheckCircle2 className="w-10 h-10 text-green-400" />
         </div>
         <div>
           <h2 className="text-2xl sm:text-3xl font-black mb-2 text-white">Application Submitted! 🎉</h2>
@@ -248,31 +298,31 @@ export function ApplicationForm() {
             Ensure you are following both official Instagram handles to receive interview updates:
           </p>
           <div className="flex flex-col gap-2 pt-1">
-            <a 
-              href="https://www.instagram.com/itboard_cmrcet/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity"
+            <a
+              href="https://www.instagram.com/itboard_cmrcet/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(245,197,24,0.2)]"
             >
               Follow @itboard_cmrcet ↗
             </a>
-            <a 
-              href="https://www.instagram.com/student_council_cmrcet/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.instagram.com/student_council_cmrcet/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-colors"
             >
               Follow @student_council_cmrcet ↗
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     )
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
-      
+
       {/* Instagram Requirement Banner */}
       <div className="glass-card p-5 border-amber-500/30 bg-amber-500/[0.05] rounded-2xl space-y-3">
         <p className="text-primary font-extrabold text-xs uppercase tracking-widest">
@@ -282,25 +332,25 @@ export function ApplicationForm() {
           It is mandatory for all applicants to follow both official Instagram pages to stay updated on shortlists & interview schedules:
         </p>
         <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
-          <a 
-            href="https://www.instagram.com/itboard_cmrcet/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://www.instagram.com/itboard_cmrcet/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity"
           >
             Follow @itboard_cmrcet ↗
           </a>
-          <a 
-            href="https://www.instagram.com/student_council_cmrcet/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://www.instagram.com/student_council_cmrcet/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-colors"
           >
             Follow @student_council_cmrcet ↗
           </a>
         </div>
       </div>
-      
+
       {/* Section 1: Personal Info */}
       <div className="space-y-6">
         <h3 className="text-2xl font-bold border-b pb-2">Personal Information</h3>
@@ -482,7 +532,7 @@ export function ApplicationForm() {
             <Textarea className="premium-input min-h-[100px]" {...register('why_join')} />
             {errors.why_join && <p className="text-sm text-destructive">{errors.why_join.message}</p>}
           </div>
-          
+
           <div className="space-y-2">
             <Label>Why should we choose you? *</Label>
             <Textarea className="premium-input min-h-[100px]" {...register('why_choose_you')} />
@@ -512,7 +562,7 @@ export function ApplicationForm() {
           </>
         ) : (
           <>
-            Submit Application <Send className="w-4 h-4" />
+            Submit Application
           </>
         )}
       </button>
