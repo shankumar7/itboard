@@ -20,9 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" data-scroll-behavior="smooth">
-      <body className={`${inter.variable} ${cursive.variable} font-sans antialiased bg-[#0a0a0a] text-white min-h-screen flex flex-col`}>
+      <body className={`${inter.variable} ${cursive.variable} font-sans antialiased bg-[#0a0a0a] text-white min-h-screen flex flex-col overflow-x-hidden w-full`}>
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 overflow-x-hidden w-full">
           {children}
         </main>
         <Footer />

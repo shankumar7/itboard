@@ -85,10 +85,14 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;

@@ -76,18 +76,18 @@ export default function Home() {
     <div className="min-h-screen">
 
       {/* ════════════════ HERO ════════════════ */}
-      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden w-full max-w-full">
         {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/[0.07] blur-[150px] animate-pulse" />
-        <div className="absolute bottom-20 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/[0.05] blur-[150px]" />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] rounded-full bg-primary/[0.07] blur-[100px] sm:blur-[150px] animate-pulse pointer-events-none" />
+        <div className="absolute bottom-20 right-0 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-blue-500/[0.05] blur-[100px] sm:blur-[150px] pointer-events-none" />
 
         {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
           backgroundSize: '60px 60px'
         }} />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-16 sm:pb-20">
+        <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 pt-20 sm:pt-32 pb-14 sm:pb-20 w-full overflow-hidden">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,16 +95,14 @@ export default function Home() {
             className="text-center space-y-6 sm:space-y-10"
           >
 
-
             {/* Headline */}
-            <div>
-              <h1 className="text-[clamp(2.2rem,8.5vw,7.5rem)] leading-[1.1] text-white tracking-normal font-normal" style={{ fontFamily: 'var(--font-cursive), cursive' }}>
-                Information{' '}
-                {' '}Technology
+            <div className="px-2">
+              <h1 className="text-[clamp(1.75rem,7vw,7.5rem)] leading-[1.15] text-white tracking-normal font-normal break-words max-w-full" style={{ fontFamily: 'var(--font-cursive), cursive' }}>
+                Information Technology
                 <br />
                 <span className="text-primary">Board</span>
               </h1>
-              <p className="text-white/40 text-base sm:text-lg md:text-xl max-w-lg mx-auto mt-4 sm:mt-6 font-medium leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
+              <p className="text-white/40 text-sm sm:text-lg md:text-xl max-w-lg mx-auto mt-4 sm:mt-6 font-medium leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
                 Join the premier technical body shaping innovation, leadership, and collaboration at CMRCET.
               </p>
             </div>
