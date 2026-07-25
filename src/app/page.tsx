@@ -104,43 +104,25 @@ export default function Home() {
 
 
             {/* Headline */}
-            <div className="px-2">
-              <h1 className="text-3xl sm:text-6xl md:text-7xl font-black text-white tracking-tight uppercase leading-[1.05]">
-                Information <br className="hidden xs:block sm:hidden" />
-                Technology
-                <span className="text-primary font-normal text-5xl sm:text-7xl md:text-8xl block mt-1 lowercase glow-text" style={{ fontFamily: 'var(--font-cursive)' }}>
-                  Board
-                </span>
+            <div>
+              <h1 className="text-[clamp(2.2rem,8.5vw,7.5rem)] leading-[1.1] text-white tracking-normal font-normal break-words max-w-full" style={{ fontFamily: 'var(--font-cursive), cursive' }}>
+                Information Technology
+                <br />
+                <span className="text-primary">Board</span>
               </h1>
-              <p className="text-white/50 text-sm sm:text-lg md:text-xl max-w-lg mx-auto mt-4 sm:mt-6 font-medium leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
+              <p className="text-white/40 text-base sm:text-lg md:text-xl max-w-lg mx-auto mt-4 sm:mt-6 font-medium leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
                 Join the premier technical body shaping innovation, leadership, and collaboration at CMRCET.
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-2 sm:px-0 max-w-md mx-auto sm:max-w-none">
-              <Link href="#apply" className="btn-primary flex items-center justify-center gap-2 group text-sm w-full sm:w-auto shadow-[0_0_25px_rgba(245,197,24,0.3)]">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
+              <Link href="#apply" className="btn-primary flex items-center justify-center gap-2 group text-sm w-full sm:w-auto">
                 Apply Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="#clubs" className="btn-ghost flex items-center justify-center text-sm w-full sm:w-auto">
                 Explore Clubs
               </Link>
-            </div>
-
-            {/* Stat Pills */}
-            <div className="pt-6 flex items-center justify-center gap-4 sm:gap-8 text-xs font-bold text-white/40 border-t border-white/5 max-w-md mx-auto">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>3 Core Clubs</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>16 Open Positions</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>CMRCET</span>
-              </div>
             </div>
           </motion.div>
         </div>
