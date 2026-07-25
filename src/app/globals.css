@@ -39,45 +39,40 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  
-  /* Premium Apple-like Shadows */
-  --shadow-premium: 0 4px 24px -4px rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
-  --shadow-premium-hover: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-  --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
 }
 
 :root {
-  /* Light Theme Only - Ultra Clean */
-  --background: #fbfbfd; /* Apple's signature off-white */
-  --foreground: #1d1d1f; /* Apple's deep gray text */
+  /* Dark Premium Theme */
+  --background: #0a0a0a;
+  --foreground: #f5f5f5;
   
-  --card: #ffffff;
-  --card-foreground: #1d1d1f;
+  --card: rgba(255, 255, 255, 0.06);
+  --card-foreground: #f5f5f5;
   
-  --popover: #ffffff;
-  --popover-foreground: #1d1d1f;
+  --popover: #1a1a1a;
+  --popover-foreground: #f5f5f5;
   
-  /* Vibrant Accents */
-  --primary: #0066cc; /* Apple Blue */
-  --primary-foreground: #ffffff;
+  /* Gold / Yellow Accent */
+  --primary: #f5c518;
+  --primary-foreground: #0a0a0a;
   
-  --secondary: #f5f5f7;
-  --secondary-foreground: #1d1d1f;
+  --secondary: rgba(255, 255, 255, 0.08);
+  --secondary-foreground: #e5e5e5;
   
-  --muted: #f5f5f7;
-  --muted-foreground: #86868b;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #a3a3a3;
   
-  --accent: #0066cc10;
-  --accent-foreground: #0066cc;
+  --accent: #f5c518;
+  --accent-foreground: #0a0a0a;
   
-  --destructive: #ff3b30; /* Apple Red */
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   
-  --border: rgba(0, 0, 0, 0.08);
-  --input: rgba(0, 0, 0, 0.08);
-  --ring: rgba(0, 102, 204, 0.4);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #f5c518;
   
-  --radius: 1rem; /* 16px */
+  --radius: 1rem;
 }
 
 @layer base {
@@ -99,66 +94,78 @@
   }
 }
 
-/* Custom Premium Utilities */
 @layer utilities {
-  .premium-card {
-    @apply bg-card rounded-3xl border border-white/40;
-    box-shadow: var(--shadow-premium);
+  /* Glass Card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
-  .premium-card:hover {
-    box-shadow: var(--shadow-premium-hover);
+
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
   }
-  
-  .premium-glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+
+  /* Primary CTA Button */
+  .btn-primary {
+    @apply rounded-full font-bold uppercase tracking-widest text-sm px-8 py-3;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(245, 197, 24, 0.3);
   }
-  
-  .premium-btn {
-    @apply rounded-full transition-all duration-300 font-medium;
-    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+
+  .btn-primary:hover {
+    box-shadow: 0 0 30px rgba(245, 197, 24, 0.5);
+    transform: translateY(-1px);
   }
-  
-  .premium-btn:hover {
-    box-shadow: 0 4px 16px rgba(0, 102, 204, 0.3);
-    transform: scale(1.02);
+
+  /* Ghost Button */
+  .btn-ghost {
+    @apply rounded-full font-semibold text-sm px-8 py-3;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f5f5f5;
+    transition: all 0.3s ease;
   }
-  
-  .premium-btn:active {
-    transform: scale(0.98);
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
   }
-  
+
+  /* Form Inputs - Dark Style */
   .premium-input {
-    @apply bg-secondary/50 rounded-xl border-transparent focus:bg-white transition-all duration-200;
+    @apply rounded-xl transition-all duration-200;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f5f5f5;
   }
-  
+
   .premium-input:focus {
-    box-shadow: 0 0 0 4px var(--ring);
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.15);
   }
-  
-  /* Aurora Background */
-  .aurora-bg {
-    position: absolute;
-    inset: -20%;
-    z-index: -1;
-    background: 
-      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-    filter: blur(60px);
-    animation: aurora 15s ease infinite alternate;
+
+  .premium-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
   }
-  
-  @keyframes aurora {
-    0% { transform: scale(1) rotate(0deg); }
-    100% { transform: scale(1.1) rotate(5deg); }
+
+  /* Glow text */
+  .glow-text {
+    text-shadow: 0 0 40px rgba(245, 197, 24, 0.3);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #f5f5f5 0%, #a3a3a3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }

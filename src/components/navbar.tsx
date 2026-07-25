@@ -1,135 +1,74 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
-import { useState, useEffect } from 'react'
-
-const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Positions', href: '/#positions' },
-  { name: 'Process', href: '/selection-process' },
-  { name: 'Contact', href: '/contact' },
-]
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export function Navbar() {
-  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   return (
-    <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <nav className={cn(
-        "pointer-events-auto transition-all duration-500 ease-in-out",
-        "bg-white/70 backdrop-blur-xl border border-white/20 shadow-premium",
-        "rounded-full px-6 py-3",
-        scrolled ? "w-full max-w-4xl" : "w-full max-w-5xl"
-      )}>
-        <div className="flex items-center justify-between">
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl font-bold tracking-tight text-foreground">
-                IT Board
-              </span>
-            </Link>
-          </div>
-          
-          {/* Desktop Nav */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-2">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href || (link.href.includes('#') && pathname === '/')
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="relative px-4 py-2 text-sm font-medium transition-colors"
-                  >
-                    <span className={cn("relative z-10", isActive ? "text-primary" : "text-foreground/70 hover:text-foreground")}>
-                      {link.name}
-                    </span>
-                    {isActive && pathname !== '/' && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className="absolute inset-0 bg-primary/10 rounded-full -z-0"
-                        initial={false}
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                )
-              })}
-              <div className="pl-4 border-l border-border/50 ml-2">
-                <Link
-                  href="/apply"
-                  className="premium-btn bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-medium text-sm inline-block"
-                >
-                  Apply Now
-                </Link>
-              </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-white/10 flex items-center justify-center p-0.5">
+              <Image src="/cmr-logo.svg" alt="CMR" width={28} height={28} className="object-contain" />
+            </div>
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-white/10 flex items-center justify-center p-0.5">
+              <Image src="/student-council-logo.svg" alt="Council" width={28} height={28} className="object-contain" />
+            </div>
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-white/10 flex items-center justify-center p-0.5">
+              <Image src="/it-board-logo.jpg" alt="IT Board" width={28} height={28} className="object-contain" />
             </div>
           </div>
+          <span className="text-white font-bold text-lg tracking-tight hidden sm:block">
+            IT Board
+          </span>
+        </Link>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-full text-foreground hover:bg-black/5 focus:outline-none"
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="/#about" className="text-white/60 hover:text-white text-sm font-medium transition-colors">About</Link>
+          <Link href="/#clubs" className="text-white/60 hover:text-white text-sm font-medium transition-colors">Clubs</Link>
+          <Link href="/#process" className="text-white/60 hover:text-white text-sm font-medium transition-colors">Process</Link>
+          <Link href="/#contact" className="text-white/60 hover:text-white text-sm font-medium transition-colors">Contact</Link>
         </div>
 
-        {/* Mobile Nav */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="pt-4 pb-2 space-y-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      'block px-4 py-3 rounded-2xl text-base font-medium transition-colors',
-                      pathname === link.href ? 'text-primary bg-primary/10' : 'text-foreground/70 hover:text-foreground hover:bg-black/5'
-                    )}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <div className="pt-2">
-                  <Link
-                    href="/apply"
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full text-center premium-btn bg-primary text-primary-foreground px-6 py-4 rounded-2xl font-medium"
-                  >
-                    Apply Now
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* CTA */}
+        <div className="hidden md:block">
+          <Link href="/#apply" className="btn-primary">
+            Apply Now
+          </Link>
+        </div>
+
+        {/* Mobile */}
+        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2">
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </nav>
-    </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden overflow-hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-white/5"
+          >
+            <div className="px-6 py-6 flex flex-col gap-4">
+              <Link href="/#about" onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white text-base font-medium py-2">About</Link>
+              <Link href="/#clubs" onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white text-base font-medium py-2">Clubs</Link>
+              <Link href="/#process" onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white text-base font-medium py-2">Process</Link>
+              <Link href="/#contact" onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white text-base font-medium py-2">Contact</Link>
+              <Link href="/#apply" onClick={() => setIsOpen(false)} className="btn-primary text-center mt-2">Apply Now</Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   )
 }
-

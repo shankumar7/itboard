@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 
-export default function LoginPage() {
+export function LoginClient() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -30,22 +30,21 @@ export default function LoginPage() {
       toast.error(error.message)
     } else {
       toast.success('Logged in successfully')
-      router.push('/admins')
       router.refresh()
     }
   }
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center p-4">
-      <div className="clay-card p-8 bg-white w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-2">Admin Login</h1>
-        <p className="text-center text-muted-foreground mb-8">IT Board Recruitment Portal</p>
+    <div className="flex flex-col min-h-screen items-center justify-center p-4 bg-background">
+      <div className="bg-white p-8 w-full max-w-md rounded-lg border border-border shadow-sm">
+        <h1 className="text-3xl font-bold text-center mb-2 text-primary silver-shadow-text">Admin Login</h1>
+        <p className="text-center text-muted-foreground mb-8 text-sm uppercase tracking-widest">IT Board Portal</p>
         
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
-            <Label>Email</Label>
+            <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">Email</Label>
             <Input 
-              className="clay-input"
+              className="premium-input"
               type="email" 
               required
               value={email}
@@ -54,9 +53,9 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label>Password</Label>
+            <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">Password</Label>
             <Input 
-              className="clay-input"
+              className="premium-input"
               type="password" 
               required
               value={password}
@@ -67,7 +66,7 @@ export default function LoginPage() {
           <button 
             type="submit" 
             disabled={isLoading}
-            className="clay-btn w-full bg-primary text-primary-foreground py-3 font-semibold flex justify-center items-center gap-2 mt-4 hover:bg-primary/90"
+            className="premium-btn w-full py-3 flex justify-center items-center gap-2 mt-4"
           >
             {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
             Sign In

@@ -7,31 +7,9 @@ export async function proxy(request: NextRequest) {
   // Update session ensures cookies are refreshed
   const response = await updateSession(request)
 
-  // Protect /admins routes
+  // Protect /admins routes (Authentication is now handled directly in /admins/page.tsx)
   if (request.nextUrl.pathname.startsWith('/admins')) {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return request.cookies.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          },
-        },
-      }
-    )
-
-    const { data: { user } } = await supabase.auth.getUser()
-
-    if (!user) {
-      // Redirect to login if not authenticated
-      const url = request.nextUrl.clone()
-      url.pathname = '/login'
-      return NextResponse.redirect(url)
-    }
+    // Session is already updated above, we just pass through
   }
 
   return response

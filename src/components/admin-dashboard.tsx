@@ -156,12 +156,12 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Rejected</div>
         </div>
         <div className="premium-card bg-white p-4 text-center">
-          <UserCircle className="w-8 h-8 mx-auto text-indigo-500 mb-2 opacity-80" />
+          <UserCircle className="w-8 h-8 mx-auto text-accent mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.senior}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Senior</div>
         </div>
         <div className="premium-card bg-white p-4 text-center">
-          <UserCircle className="w-8 h-8 mx-auto text-blue-400 mb-2 opacity-80" />
+          <UserCircle className="w-8 h-8 mx-auto text-muted-foreground mb-2 opacity-80" />
           <div className="text-2xl font-bold">{stats.junior}</div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Junior</div>
         </div>
@@ -217,7 +217,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
         
         <button 
           onClick={handleExportCSV}
-          className="premium-btn bg-indigo-600 text-white px-6 py-2.5 flex items-center gap-2 font-medium hover:bg-indigo-700 w-full md:w-auto"
+          className="premium-btn bg-accent text-white px-6 py-2.5 flex items-center gap-2 font-medium hover:bg-accent/90 w-full md:w-auto"
         >
           <Download className="w-4 h-4" /> Export CSV
         </button>
@@ -227,7 +227,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
       <div className="premium-card bg-white overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-slate-50/50">
+            <TableHeader className="bg-secondary/20">
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Roll Number</TableHead>
@@ -247,11 +247,11 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                 </TableRow>
               ) : (
                 filteredApps.map((app) => (
-                  <TableRow key={app.id} className="hover:bg-slate-50/50 transition-colors">
+                  <TableRow key={app.id} className="hover:bg-secondary/20 transition-colors">
                     <TableCell className="font-medium">{app.name}</TableCell>
                     <TableCell>{app.roll_number}</TableCell>
                     <TableCell>
-                      <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-md text-xs font-medium">
+                      <span className="bg-secondary/50 text-slate-700 px-2 py-1 rounded-md text-xs font-medium">
                         {app.branch}
                       </span>
                     </TableCell>
@@ -298,7 +298,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
             <div className="space-y-8 pb-20">
               
               {/* Actions & Status */}
-              <div className="bg-slate-50 p-4 rounded-xl border border-border/50 space-y-4">
+              <div className="bg-secondary/30 p-4 rounded-xl border border-border/50 space-y-4">
                 <h4 className="font-semibold flex items-center gap-2"><UserCheck className="w-4 h-4" /> Admin Actions</h4>
                 <div className="flex flex-wrap gap-2">
                   <button 
@@ -339,7 +339,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus(selectedApp.status)}
-                    className="premium-btn bg-slate-200 text-slate-800 px-4 py-2 text-sm font-medium hover:bg-slate-300 w-full"
+                    className="premium-btn bg-secondary text-slate-800 px-4 py-2 text-sm font-medium hover:bg-slate-300 w-full"
                   >
                     Save Notes
                   </button>
@@ -378,7 +378,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                   <FileText className="w-4 h-4" /> View Resume
                 </a>
                 {selectedApp.github && (
-                  <a href={selectedApp.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg hover:bg-slate-200">
+                  <a href={selectedApp.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-slate-700 bg-secondary/50 px-3 py-1.5 rounded-lg hover:bg-secondary">
                     <ExternalLink className="w-4 h-4" /> GitHub
                   </a>
                 )}
@@ -403,7 +403,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                     <div className="text-sm font-medium text-primary mb-1">Skills</div>
                     <div className="flex flex-wrap gap-2">
                       {selectedApp.answers?.skills?.map((skill: string) => (
-                        <span key={skill} className="bg-slate-100 px-2 py-1 rounded-md text-xs font-medium text-slate-700">{skill}</span>
+                        <span key={skill} className="bg-secondary/50 px-2 py-1 rounded-md text-xs font-medium text-slate-700">{skill}</span>
                       ))}
                     </div>
                   </div>
@@ -417,7 +417,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                     if (['skills', 'hours_per_week'].includes(key) || !value) return null;
                     const label = key.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
                     return (
-                      <div key={key} className="bg-slate-50 p-4 rounded-xl">
+                      <div key={key} className="bg-secondary/30 p-4 rounded-xl">
                         <div className="text-sm font-medium text-primary mb-2">{label}</div>
                         <div className="text-sm whitespace-pre-wrap leading-relaxed">{value as string}</div>
                       </div>

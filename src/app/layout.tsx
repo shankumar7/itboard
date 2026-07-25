@@ -8,8 +8,8 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "IT Board Recruitment Portal",
-  description: "Join the IT Board - Lead the future of technical communities.",
+  title: "IT Board · Recruitment Portal",
+  description: "Join the IT Board - Lead the future of technical communities at CMRCET.",
 };
 
 export default function RootLayout({
@@ -18,10 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-background min-h-screen flex flex-col`}>
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} font-sans antialiased bg-[#0a0a0a] text-white min-h-screen flex flex-col`}>
         <Navbar />
-        <main className="flex-1 pt-20">
+        <main className="flex-1">
           {children}
         </main>
         <Footer />
