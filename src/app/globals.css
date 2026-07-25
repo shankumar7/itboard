@@ -7,6 +7,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-cursive: var(--font-cursive);
   
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
@@ -140,7 +141,7 @@
 
   /* Form Inputs - Dark Style */
   .premium-input {
-    @apply rounded-xl transition-all duration-200;
+    @apply w-full rounded-xl transition-all duration-200;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #f5f5f5;

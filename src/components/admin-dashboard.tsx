@@ -131,49 +131,49 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
   }
 
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-8 pb-10 text-white">
       
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <div className="premium-card bg-white p-4 text-center">
-          <Users className="w-8 h-8 mx-auto text-primary mb-2 opacity-80" />
-          <div className="text-2xl font-bold">{stats.total}</div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Total</div>
+        <div className="glass-card p-5 text-center border-white/10">
+          <Users className="w-7 h-7 mx-auto text-primary mb-2 opacity-90" />
+          <div className="text-3xl font-black text-white">{stats.total}</div>
+          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">Total</div>
         </div>
-        <div className="premium-card bg-white p-4 text-center">
-          <Clock className="w-8 h-8 mx-auto text-yellow-500 mb-2 opacity-80" />
-          <div className="text-2xl font-bold">{stats.pending}</div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Pending</div>
+        <div className="glass-card p-5 text-center border-white/10">
+          <Clock className="w-7 h-7 mx-auto text-amber-400 mb-2 opacity-90" />
+          <div className="text-3xl font-black text-amber-400">{stats.pending}</div>
+          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">Pending</div>
         </div>
-        <div className="premium-card bg-white p-4 text-center">
-          <UserCheck className="w-8 h-8 mx-auto text-green-500 mb-2 opacity-80" />
-          <div className="text-2xl font-bold">{stats.shortlisted}</div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Shortlisted</div>
+        <div className="glass-card p-5 text-center border-white/10">
+          <UserCheck className="w-7 h-7 mx-auto text-emerald-400 mb-2 opacity-90" />
+          <div className="text-3xl font-black text-emerald-400">{stats.shortlisted}</div>
+          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">Shortlisted</div>
         </div>
-        <div className="premium-card bg-white p-4 text-center">
-          <XCircle className="w-8 h-8 mx-auto text-red-500 mb-2 opacity-80" />
-          <div className="text-2xl font-bold">{stats.rejected}</div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Rejected</div>
+        <div className="glass-card p-5 text-center border-white/10">
+          <XCircle className="w-7 h-7 mx-auto text-rose-400 mb-2 opacity-90" />
+          <div className="text-3xl font-black text-rose-400">{stats.rejected}</div>
+          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">Rejected</div>
         </div>
-        <div className="premium-card bg-white p-4 text-center">
-          <UserCircle className="w-8 h-8 mx-auto text-accent mb-2 opacity-80" />
-          <div className="text-2xl font-bold">{stats.senior}</div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Senior</div>
+        <div className="glass-card p-5 text-center border-white/10">
+          <UserCircle className="w-7 h-7 mx-auto text-primary mb-2 opacity-90" />
+          <div className="text-3xl font-black text-white">{stats.senior}</div>
+          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">Senior</div>
         </div>
-        <div className="premium-card bg-white p-4 text-center">
-          <UserCircle className="w-8 h-8 mx-auto text-muted-foreground mb-2 opacity-80" />
-          <div className="text-2xl font-bold">{stats.junior}</div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Junior</div>
+        <div className="glass-card p-5 text-center border-white/10">
+          <UserCircle className="w-7 h-7 mx-auto text-white/40 mb-2 opacity-80" />
+          <div className="text-3xl font-black text-white/70">{stats.junior}</div>
+          <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">Junior</div>
         </div>
       </div>
 
       {/* Filters & Actions */}
-      <div className="premium-card bg-white p-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="glass-card p-6 border-white/10 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto flex-1">
           <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
             <Input 
-              className="premium-input pl-9" 
+              className="premium-input pl-10" 
               placeholder="Search Name or Roll No..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -181,7 +181,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           </div>
           
           <Select value={filterStatus} onValueChange={(val) => setFilterStatus(val || 'All')}>
-            <SelectTrigger className="premium-input w-full md:w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+            <SelectTrigger className="premium-input w-full md:w-44"><SelectValue placeholder="Status" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Statuses</SelectItem>
               <SelectItem value="Pending">Pending</SelectItem>
@@ -193,7 +193,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           </Select>
           
           <Select value={filterBranch} onValueChange={(val) => setFilterBranch(val || 'All')}>
-            <SelectTrigger className="premium-input w-full md:w-40"><SelectValue placeholder="Branch" /></SelectTrigger>
+            <SelectTrigger className="premium-input w-full md:w-44"><SelectValue placeholder="Branch" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Branches</SelectItem>
               <SelectItem value="CSE">CSE</SelectItem>
@@ -205,65 +205,66 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
           </Select>
 
           <Select value={filterClub} onValueChange={(val) => setFilterClub(val || 'All')}>
-            <SelectTrigger className="premium-input w-full md:w-48"><SelectValue placeholder="Club" /></SelectTrigger>
+            <SelectTrigger className="premium-input w-full md:w-52"><SelectValue placeholder="Club" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All Clubs</SelectItem>
               <SelectItem value="League of Coders">League of Coders</SelectItem>
               <SelectItem value="Web Development Club">Web Development Club</SelectItem>
               <SelectItem value="AI Minds">AI Minds</SelectItem>
+              <SelectItem value="Central Board">Central Board</SelectItem>
             </SelectContent>
           </Select>
         </div>
         
         <button 
           onClick={handleExportCSV}
-          className="premium-btn bg-accent text-white px-6 py-2.5 flex items-center gap-2 font-medium hover:bg-accent/90 w-full md:w-auto"
+          className="btn-primary text-xs px-6 py-3 flex items-center justify-center gap-2 font-bold w-full md:w-auto shrink-0"
         >
-          <Download className="w-4 h-4" /> Export CSV
+          <Download className="w-4 h-4" /> EXPORT CSV
         </button>
       </div>
 
       {/* Data Table */}
-      <div className="premium-card bg-white overflow-hidden">
+      <div className="glass-card overflow-hidden border-white/10">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-secondary/20">
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Roll Number</TableHead>
-                <TableHead>Branch</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>CGPA</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+            <TableHeader className="bg-white/[0.04]">
+              <TableRow className="border-b border-white/10">
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4">Name</TableHead>
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4">Roll Number</TableHead>
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4">Branch</TableHead>
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4">Role</TableHead>
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4">CGPA</TableHead>
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4">Status</TableHead>
+                <TableHead className="text-white/40 text-xs uppercase font-bold tracking-wider py-4 text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredApps.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={7} className="text-center py-12 text-white/30 text-sm">
                     No applications found matching your criteria.
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredApps.map((app) => (
-                  <TableRow key={app.id} className="hover:bg-secondary/20 transition-colors">
-                    <TableCell className="font-medium">{app.name}</TableCell>
-                    <TableCell>{app.roll_number}</TableCell>
+                  <TableRow key={app.id} className="border-b border-white/[0.06] hover:bg-white/[0.04] transition-colors">
+                    <TableCell className="font-bold text-white py-4">{app.name}</TableCell>
+                    <TableCell className="text-white/70 font-mono text-xs">{app.roll_number}</TableCell>
                     <TableCell>
-                      <span className="bg-secondary/50 text-slate-700 px-2 py-1 rounded-md text-xs font-medium">
+                      <span className="bg-white/10 text-white/80 px-2.5 py-1 rounded-md text-xs font-semibold border border-white/10">
                         {app.branch}
                       </span>
                     </TableCell>
-                    <TableCell className="max-w-[200px] truncate">{app.role}</TableCell>
-                    <TableCell>{app.cgpa}</TableCell>
+                    <TableCell className="max-w-[200px] truncate text-white/80 font-medium">{app.role}</TableCell>
+                    <TableCell className="text-white/80 font-medium">{app.cgpa}</TableCell>
                     <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
-                        app.status === 'Pending' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                        app.status === 'Shortlisted' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                        app.status === 'Interview Scheduled' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' :
-                        app.status === 'Selected' ? 'bg-green-50 text-green-700 border-green-200' :
-                        'bg-red-50 text-red-700 border-red-200'
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold border inline-block ${
+                        app.status === 'Pending' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                        app.status === 'Shortlisted' ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' :
+                        app.status === 'Interview Scheduled' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
+                        app.status === 'Selected' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                        'bg-rose-500/10 text-rose-400 border-rose-500/20'
                       }`}>
                         {app.status}
                       </span>
@@ -271,7 +272,7 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
                     <TableCell className="text-right">
                       <button 
                         onClick={() => { setSelectedApp(app); setNotes(app.notes || ''); }}
-                        className="text-primary hover:text-primary/80 font-medium text-sm flex items-center justify-end gap-1 w-full"
+                        className="text-primary hover:text-primary/80 font-bold text-xs uppercase tracking-wider inline-flex items-center gap-1 transition-colors"
                       >
                         View <ChevronRight className="w-4 h-4" />
                       </button>
@@ -286,10 +287,10 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
 
       {/* Sheet / Drawer for Details */}
       <Sheet open={!!selectedApp} onOpenChange={(open) => !open && setSelectedApp(null)}>
-        <SheetContent className="sm:max-w-xl overflow-y-auto w-[90vw]">
+        <SheetContent className="sm:max-w-xl overflow-y-auto w-[90vw] bg-[#121212] border-l border-white/10 text-white">
           <SheetHeader className="mb-6">
-            <SheetTitle className="text-2xl">{selectedApp?.name}</SheetTitle>
-            <SheetDescription>
+            <SheetTitle className="text-2xl font-black text-white">{selectedApp?.name}</SheetTitle>
+            <SheetDescription className="text-white/50 text-xs">
               {selectedApp?.roll_number} • {selectedApp?.branch} • {selectedApp?.year}
             </SheetDescription>
           </SheetHeader>
@@ -298,48 +299,48 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
             <div className="space-y-8 pb-20">
               
               {/* Actions & Status */}
-              <div className="bg-secondary/30 p-4 rounded-xl border border-border/50 space-y-4">
-                <h4 className="font-semibold flex items-center gap-2"><UserCheck className="w-4 h-4" /> Admin Actions</h4>
+              <div className="glass-card p-5 border-white/10 space-y-4">
+                <h4 className="font-bold text-sm text-white flex items-center gap-2 uppercase tracking-wider"><UserCheck className="w-4 h-4 text-primary" /> Admin Actions</h4>
                 <div className="flex flex-wrap gap-2">
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus('Shortlisted')}
-                    className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-sky-500/15 text-sky-400 border border-sky-500/30 hover:bg-sky-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
                   >Shortlist</button>
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus('Interview Scheduled')}
-                    className="bg-indigo-100 text-indigo-700 hover:bg-indigo-200 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
                   >Interview</button>
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus('Selected')}
-                    className="bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
                   >Select</button>
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus('Rejected')}
-                    className="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-rose-500/15 text-rose-400 border border-rose-500/30 hover:bg-rose-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
                   >Reject</button>
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus('Pending')}
-                    className="bg-yellow-100 text-yellow-700 hover:bg-yellow-200 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-amber-500/15 text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
                   >Pending</button>
                 </div>
                 
-                <div className="space-y-2 mt-4 pt-4 border-t border-border/50">
-                  <label className="text-sm font-medium">Admin Notes</label>
+                <div className="space-y-2 mt-4 pt-4 border-t border-white/10">
+                  <label className="text-xs font-bold uppercase tracking-wider text-white/50">Admin Private Notes</label>
                   <Textarea 
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Add private notes about this candidate..."
-                    className="bg-white"
+                    className="premium-input min-h-[80px]"
                   />
                   <button 
                     disabled={isUpdating}
                     onClick={() => handleUpdateStatus(selectedApp.status)}
-                    className="premium-btn bg-secondary text-slate-800 px-4 py-2 text-sm font-medium hover:bg-slate-300 w-full"
+                    className="btn-ghost w-full py-2.5 text-xs font-bold uppercase tracking-wider mt-2"
                   >
                     Save Notes
                   </button>
@@ -347,79 +348,65 @@ export function AdminDashboard({ initialApplications }: { initialApplications: A
               </div>
 
               {/* Core Details */}
-              <div className="grid grid-cols-2 gap-y-4 gap-x-6 text-sm">
+              <div className="grid grid-cols-2 gap-y-5 gap-x-6 text-sm">
                 <div>
-                  <div className="text-muted-foreground mb-1">Email</div>
-                  <div className="font-medium truncate" title={selectedApp.college_email}>{selectedApp.college_email}</div>
-                  <div className="font-medium truncate" title={selectedApp.personal_email}>{selectedApp.personal_email}</div>
+                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Email</div>
+                  <div className="font-semibold text-white truncate" title={selectedApp.college_email}>{selectedApp.college_email}</div>
+                  {selectedApp.personal_email && <div className="text-white/60 text-xs truncate" title={selectedApp.personal_email}>{selectedApp.personal_email}</div>}
                 </div>
                 <div>
-                  <div className="text-muted-foreground mb-1">Phone</div>
-                  <div className="font-medium">{selectedApp.phone}</div>
+                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Phone</div>
+                  <div className="font-semibold text-white">{selectedApp.phone}</div>
                 </div>
                 <div>
-                  <div className="text-muted-foreground mb-1">Club & Role</div>
-                  <div className="font-medium">{selectedApp.club}</div>
-                  <div className="font-medium text-primary">{selectedApp.role}</div>
+                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Club & Role</div>
+                  <div className="font-semibold text-white">{selectedApp.club}</div>
+                  <div className="font-bold text-primary">{selectedApp.role}</div>
                 </div>
                 <div>
-                  <div className="text-muted-foreground mb-1">Academics</div>
-                  <div className="font-medium">CGPA: {selectedApp.cgpa}</div>
-                  <div className="font-medium">Attendance: {selectedApp.attendance}</div>
-                  <div className="font-medium text-red-600">
+                  <div className="text-white/40 text-xs font-bold uppercase tracking-wider mb-1">Academics</div>
+                  <div className="font-semibold text-white">CGPA: {selectedApp.cgpa}</div>
+                  <div className="text-white/70 text-xs">Attendance: {selectedApp.attendance}</div>
+                  <div className="text-xs font-bold text-rose-400 mt-0.5">
                     {selectedApp.backlogs ? `Backlogs: ${selectedApp.backlog_subjects}` : 'No Backlogs'}
                   </div>
                 </div>
               </div>
 
               {/* Links */}
-              <div className="flex flex-wrap gap-4 pt-4 border-t border-border/50">
-                <a href={selectedApp.resume_url} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg hover:bg-blue-100">
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
+                <a href={selectedApp.resume_url} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-4 py-2 rounded-xl hover:bg-primary/20 transition-all">
                   <FileText className="w-4 h-4" /> View Resume
                 </a>
                 {selectedApp.github && (
-                  <a href={selectedApp.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-slate-700 bg-secondary/50 px-3 py-1.5 rounded-lg hover:bg-secondary">
+                  <a href={selectedApp.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-medium text-white/70 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
                     <ExternalLink className="w-4 h-4" /> GitHub
                   </a>
                 )}
                 {selectedApp.linkedin && (
-                  <a href={selectedApp.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-blue-700 bg-blue-50 px-3 py-1.5 rounded-lg hover:bg-blue-100">
+                  <a href={selectedApp.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-medium text-white/70 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
                     <ExternalLink className="w-4 h-4" /> LinkedIn
                   </a>
                 )}
                 {selectedApp.portfolio && (
-                  <a href={selectedApp.portfolio} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg hover:bg-indigo-100">
+                  <a href={selectedApp.portfolio} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-medium text-white/70 bg-white/5 border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
                     <ExternalLink className="w-4 h-4" /> Portfolio
                   </a>
                 )}
               </div>
 
               {/* Answers */}
-              <div className="space-y-6 pt-4 border-t border-border/50">
-                <h4 className="font-semibold text-lg">Application Answers</h4>
+              <div className="space-y-6 pt-4 border-t border-white/10">
+                <h4 className="font-bold text-base text-white uppercase tracking-wider">Application Answers</h4>
                 
                 <div className="space-y-4">
-                  <div>
-                    <div className="text-sm font-medium text-primary mb-1">Skills</div>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedApp.answers?.skills?.map((skill: string) => (
-                        <span key={skill} className="bg-secondary/50 px-2 py-1 rounded-md text-xs font-medium text-slate-700">{skill}</span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="text-sm font-medium text-primary mb-1">Hours per week</div>
-                    <div className="text-sm">{selectedApp.answers?.hours_per_week}</div>
-                  </div>
-                  
                   {Object.entries(selectedApp.answers || {}).map(([key, value]) => {
-                    if (['skills', 'hours_per_week'].includes(key) || !value) return null;
+                    if (!value) return null;
                     const label = key.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
                     return (
-                      <div key={key} className="bg-secondary/30 p-4 rounded-xl">
-                        <div className="text-sm font-medium text-primary mb-2">{label}</div>
-                        <div className="text-sm whitespace-pre-wrap leading-relaxed">{value as string}</div>
+                      <div key={key} className="glass-card p-4 border-white/10">
+                        <div className="text-xs font-bold text-primary uppercase tracking-wider mb-1.5">{label}</div>
+                        <div className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed">{value as string}</div>
                       </div>
                     )
                   })}

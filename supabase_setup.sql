@@ -4,13 +4,13 @@
 create extension if not exists "uuid-ossp";
 
 -- Create applications table
-create table applications (
+create table if not exists applications (
   id uuid primary key default uuid_generate_v4(),
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   name text not null,
   roll_number text not null,
   college_email text not null,
-  personal_email text not null,
+  personal_email text,
   phone text not null,
   year text not null check (year in ('Second Year', 'Third Year')),
   branch text not null check (branch in ('CSE', 'CSM', 'CSD', 'ECE', 'EEE/MECH/CIVIL')),
@@ -18,7 +18,7 @@ create table applications (
   backlogs boolean not null default false,
   backlog_subjects text,
   attendance text not null,
-  club text not null check (club in ('League of Coders', 'Web Development Club', 'AI Minds')),
+  club text not null check (club in ('League of Coders', 'Web Development Club', 'AI Minds', 'Central Board')),
   role text not null,
   github text,
   linkedin text,

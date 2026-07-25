@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -11,7 +11,7 @@ import { Loader2, UploadCloud } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel, SelectSeparator } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -22,7 +22,6 @@ const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   roll_number: z.string().min(5, 'Invalid roll number'),
   college_email: z.string().email('Invalid email'),
-  personal_email: z.string().email('Invalid email'),
   phone: z.string().min(10, 'Invalid phone number'),
   year: z.enum(['Second Year', 'Third Year']),
   branch: z.string().min(1, 'Branch is required'),
@@ -39,13 +38,9 @@ const formSchema = z.object({
   portfolio: z.string().url('Invalid URL').optional().or(z.literal('')),
   
   // General Answers
-  leadership_experience: z.string().min(10, 'Please provide more details'),
   hackathons: z.string().optional(),
-  projects: z.string().optional(),
   why_join: z.string().min(10, 'Please provide more details'),
   why_choose_you: z.string().min(10, 'Please provide more details'),
-  hours_per_week: z.enum(['2-4', '5-8', '8-12', '12+']),
-  skills: z.array(z.string()).min(1, 'Select at least one skill'),
   
   // Role specific (all optional, but we can validate conditionally)
   vision: z.string().optional(),
@@ -74,20 +69,27 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const SENIOR_ROLES = [
-  'Head - AI Minds',
-  'Vice President - AI Minds',
+  'Head – AI Minds',
+  'Vice President – AI Minds',
   'PR & Outreach Lead',
   'Industry Relations & Sponsorship Lead',
-  'Technical Strategy Lead'
+  'Design & Media Coordinator'
 ];
 
 const JUNIOR_ROLES = [
-  'Vice President - League of Coders',
-  'Vice President - Web Development Club',
+  'Vice President – League of Coders',
+  'Vice President – Web Development Club',
   'Technical Coordinator',
   'Events & Operations Coordinator',
   'Community Engagement Coordinator',
-  'Design & Media Coordinator'
+  'Technical Strategy Lead'
+];
+
+const FILLED_ROLES = [
+  'Advisor',
+  'General Secretary',
+  'Head – League of Coders',
+  'Head – Web Development Club'
 ];
 
 const ALL_BRANCHES = ['CSE', 'CSM', 'CSD', 'ECE', 'EEE/MECH/CIVIL'];
@@ -106,15 +108,20 @@ export function ApplicationForm() {
 
   const { register, handleSubmit, watch, control, formState: { errors }, setValue } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      skills: [],
-      backlogs: 'No'
-    }
+    mode: 'onSubmit',
   })
 
   const watchRole = watch('role')
   const watchBacklogs = watch('backlogs')
   const watchBranch = watch('branch')
+  const watchRollNumber = watch('roll_number')
+
+  useEffect(() => {
+    if (watchRollNumber) {
+      const cleanRoll = watchRollNumber.trim().toLowerCase()
+      setValue('college_email', `${cleanRoll}@cmrcet.ac.in`)
+    }
+  }, [watchRollNumber, setValue])
 
   const isSeniorRole = SENIOR_ROLES.includes(watchRole)
   const availableBranches = isSeniorRole ? ALL_BRANCHES.filter(b => b !== 'CSE') : ALL_BRANCHES
@@ -144,36 +151,13 @@ export function ApplicationForm() {
   }
 
   const onSubmit = async (data: FormValues) => {
-    if (!resumeFile) {
-      toast.error("Please upload your resume")
-      return
-    }
-
     setIsSubmitting(true)
     try {
-      // 1. Upload Resume
-      const fileExt = resumeFile.name.split('.').pop()
-      const fileName = `${data.roll_number}-${Date.now()}.${fileExt}`
-      
-      const { data: uploadData, error: uploadError } = await supabase
-        .storage
-        .from('resumes')
-        .upload(fileName, resumeFile, { upsert: true })
-
-      if (uploadError) throw new Error("Resume upload failed: " + uploadError.message)
-
-      // Get public URL
-      const { data: urlData } = supabase.storage.from('resumes').getPublicUrl(fileName)
-      
-      // 2. Prepare JSON answers
+      // Prepare JSON answers
       const answers = {
-        leadership_experience: data.leadership_experience,
         hackathons: data.hackathons,
-        projects: data.projects,
         why_join: data.why_join,
         why_choose_you: data.why_choose_you,
-        hours_per_week: data.hours_per_week,
-        skills: data.skills,
         // Optional role specific
         vision: data.vision,
         future_initiatives: data.future_initiatives,
@@ -195,7 +179,6 @@ export function ApplicationForm() {
         name: data.name,
         roll_number: data.roll_number,
         college_email: data.college_email,
-        personal_email: data.personal_email,
         phone: data.phone,
         year: data.year,
         branch: data.branch,
@@ -208,7 +191,6 @@ export function ApplicationForm() {
         github: data.github,
         linkedin: data.linkedin,
         portfolio: data.portfolio,
-        resume_url: urlData.publicUrl,
         answers: answers
       })
 
@@ -245,7 +227,7 @@ export function ApplicationForm() {
       {/* Section 1: Personal Info */}
       <div className="space-y-6">
         <h3 className="text-2xl font-bold border-b pb-2">Personal Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
           <div className="space-y-2">
             <Label>Full Name *</Label>
             <Input className="premium-input" {...register('name')} placeholder="John Doe" />
@@ -262,11 +244,6 @@ export function ApplicationForm() {
             {errors.college_email && <p className="text-sm text-destructive">{errors.college_email.message}</p>}
           </div>
           <div className="space-y-2">
-            <Label>Personal Email *</Label>
-            <Input className="premium-input" type="email" {...register('personal_email')} placeholder="personal@gmail.com" />
-            {errors.personal_email && <p className="text-sm text-destructive">{errors.personal_email.message}</p>}
-          </div>
-          <div className="space-y-2">
             <Label>Phone Number *</Label>
             <Input className="premium-input" {...register('phone')} placeholder="9876543210" />
             {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
@@ -277,7 +254,7 @@ export function ApplicationForm() {
       {/* Section 2: Academic Info */}
       <div className="space-y-6">
         <h3 className="text-2xl font-bold border-b pb-2">Academic Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
           <div className="space-y-2">
             <Label>Year *</Label>
             <Controller
@@ -305,16 +282,26 @@ export function ApplicationForm() {
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="premium-input"><SelectValue placeholder="Select Role" /></SelectTrigger>
                   <SelectContent>
-                    <optgroup label="Senior Positions">
+                    <SelectGroup>
+                      <SelectLabel>Senior Positions (Open)</SelectLabel>
                       {SENIOR_ROLES.map(role => (
                         <SelectItem key={role} value={role}>{role}</SelectItem>
                       ))}
-                    </optgroup>
-                    <optgroup label="Junior Positions">
+                    </SelectGroup>
+                    <SelectSeparator />
+                    <SelectGroup>
+                      <SelectLabel>Junior Positions (Open)</SelectLabel>
                       {JUNIOR_ROLES.map(role => (
                         <SelectItem key={role} value={role}>{role}</SelectItem>
                       ))}
-                    </optgroup>
+                    </SelectGroup>
+                    <SelectSeparator />
+                    <SelectGroup>
+                      <SelectLabel>Filled Positions</SelectLabel>
+                      {FILLED_ROLES.map(role => (
+                        <SelectItem key={role} value={role} disabled>{role} (Filled)</SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               )}
@@ -358,6 +345,7 @@ export function ApplicationForm() {
                     <SelectItem value="League of Coders">League of Coders</SelectItem>
                     <SelectItem value="Web Development Club">Web Development Club</SelectItem>
                     <SelectItem value="AI Minds">AI Minds</SelectItem>
+                    <SelectItem value="Central Board">Central Board</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -407,7 +395,7 @@ export function ApplicationForm() {
       {/* Section 3: Links */}
       <div className="space-y-6">
         <h3 className="text-2xl font-bold border-b pb-2">Profiles & Links</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="space-y-6">
           <div className="space-y-2">
             <Label>GitHub URL</Label>
             <Input className="premium-input" {...register('github')} placeholder="https://github.com/..." />
@@ -443,70 +431,8 @@ export function ApplicationForm() {
           </div>
 
           <div className="space-y-2">
-            <Label>Describe one leadership experience *</Label>
-            <Textarea className="premium-input min-h-[100px]" {...register('leadership_experience')} />
-            {errors.leadership_experience && <p className="text-sm text-destructive">{errors.leadership_experience.message}</p>}
-          </div>
-
-          <div className="space-y-2">
             <Label>Hackathons (If any)</Label>
             <Textarea className="premium-input" {...register('hackathons')} placeholder="List hackathons participated in or won" />
-          </div>
-
-          <div className="space-y-2">
-            <Label>Projects</Label>
-            <Textarea className="premium-input" {...register('projects')} placeholder="Briefly describe 1-2 major projects" />
-          </div>
-
-          <div className="space-y-2">
-            <Label>How many hours per week can you contribute? *</Label>
-            <Controller
-              name="hours_per_week"
-              control={control}
-              render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="premium-input w-full md:w-1/3"><SelectValue placeholder="Select Hours" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2-4">2-4 Hours</SelectItem>
-                    <SelectItem value="5-8">5-8 Hours</SelectItem>
-                    <SelectItem value="8-12">8-12 Hours</SelectItem>
-                    <SelectItem value="12+">12+ Hours</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            {errors.hours_per_week && <p className="text-sm text-destructive">{errors.hours_per_week.message}</p>}
-          </div>
-
-          <div className="space-y-4">
-            <Label>Skills *</Label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {SKILLS.map((skill) => (
-                <div key={skill} className="flex items-center space-x-2">
-                  <Controller
-                    name="skills"
-                    control={control}
-                    render={({ field }) => (
-                      <Checkbox
-                        id={`skill-${skill}`}
-                        checked={field.value?.includes(skill)}
-                        onCheckedChange={(checked) => {
-                          const current = field.value || []
-                          const updated = checked
-                            ? [...current, skill]
-                            : current.filter((val) => val !== skill)
-                          field.onChange(updated)
-                        }}
-                      />
-                    )}
-                  />
-                  <Label htmlFor={`skill-${skill}`} className="font-normal cursor-pointer text-sm">
-                    {skill}
-                  </Label>
-                </div>
-              ))}
-            </div>
-            {errors.skills && <p className="text-sm text-destructive">{errors.skills.message}</p>}
           </div>
         </div>
       </div>
@@ -514,8 +440,8 @@ export function ApplicationForm() {
       {/* Section 5: Role Specific Questions */}
       {watchRole && (
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold border-b pb-2 text-primary">Role Specific Questions</h3>
-          <div className="space-y-6 p-6 bg-blue-50/50 rounded-2xl border border-blue-100">
+          <h3 className="text-2xl font-bold border-b border-white/10 pb-2 text-primary">Role Specific Questions</h3>
+          <div className="space-y-6 p-6 bg-white/[0.03] rounded-2xl border border-white/5">
             
             {(watchRole.includes('Head') || watchRole.includes('Vice President')) && (
               <>
@@ -601,31 +527,7 @@ export function ApplicationForm() {
         </div>
       )}
 
-      {/* Section 6: Resume Upload */}
-      <div className="space-y-6">
-        <h3 className="text-2xl font-bold border-b pb-2">Resume Upload</h3>
-        <Card className="premium-card border-dashed border-2 border-primary/30">
-          <CardContent className="pt-6 pb-8 text-center flex flex-col items-center">
-            <UploadCloud className="w-12 h-12 text-primary mb-4" />
-            <Label htmlFor="resume-upload" className="text-lg font-medium cursor-pointer text-primary hover:underline">
-              Click to select PDF
-            </Label>
-            <Input 
-              id="resume-upload" 
-              type="file" 
-              accept=".pdf" 
-              className="hidden" 
-              onChange={handleFileChange} 
-            />
-            <p className="text-sm text-muted-foreground mt-2">Maximum 5MB. PDF only.</p>
-            {resumeFile && (
-              <p className="mt-4 text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-md">
-                Selected: {resumeFile.name}
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+
 
       <button
         type="submit"
