@@ -13,10 +13,10 @@ export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-[#050505] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-8">
-        
+
         {/* Top Footer Row */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
-          
+
           {/* Logo & Brand */}
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <div className="flex items-center -space-x-2">
@@ -25,8 +25,8 @@ export function Footer() {
               <img src="/it-board-logo.jpg" alt="IT Board" className="w-8 h-8 rounded-full object-cover ring-2 ring-[#050505]" />
             </div>
             <div>
-              <p className="font-bold text-white text-sm tracking-tight">IT Board CMRCET</p>
-              <p className="text-white/30 text-[10px] uppercase tracking-widest font-medium">Department of Information Technology</p>
+              <p className="font-bold text-white text-sm tracking-tight"> Board of IT</p>
+              <p className="text-white/30 text-[10px] uppercase tracking-widest font-medium">CMR College of Engineering and Technology.</p>
             </div>
           </div>
 
