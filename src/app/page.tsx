@@ -258,31 +258,31 @@ export default function Home() {
       </section>
 
       {/* ════════════════ APPLY ════════════════ */}
-      <section id="apply" className="py-32 scroll-mt-20 relative">
+      <section id="apply" className="py-16 sm:py-32 scroll-mt-20 relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.03] blur-[150px]" />
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <p className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-5">Join Us</p>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight">Apply Now</h2>
-            <p className="text-white/40 max-w-xl mx-auto">Fill in your details, upload your resume, and answer all required questions.</p>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-10 sm:mb-16">
+            <p className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3 sm:mb-5">Join Us</p>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-3 sm:mb-4 tracking-tight">Apply Now</h2>
+            <p className="text-white/40 text-sm sm:text-base max-w-xl mx-auto px-2">Fill in your details, upload your resume, and answer all required questions.</p>
           </div>
-          <div className="glass-card p-8 md:p-12">
+          <div className="glass-card p-4 sm:p-8 md:p-12">
             <ApplicationForm />
           </div>
         </div>
       </section>
 
       {/* ════════════════ CONTACT ════════════════ */}
-      <section id="contact" className="py-32 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-5">Get In Touch</p>
-            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight">Contact</h2>
+      <section id="contact" className="py-16 sm:py-32 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <p className="text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3 sm:mb-5">Get In Touch</p>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tight">Contact</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto">
             {/* Featured Image Card */}
-            <div className="glass-card overflow-hidden group relative h-[290px] sm:h-[310px] border-white/10">
+            <div className="glass-card overflow-hidden group relative h-[250px] sm:h-[310px] border-white/10">
               <img 
                 src="/board-banner.jpeg" 
                 alt="IT Board Leadership" 
@@ -291,7 +291,7 @@ export default function Home() {
             </div>
 
             {/* Contact Info */}
-            <div className="glass-card p-6 flex flex-col justify-between h-[290px] sm:h-[310px]">
+            <div className="glass-card p-5 sm:p-6 flex flex-col justify-between h-auto min-h-[290px] sm:h-[310px]">
               <div>
                 <h3 className="text-xl font-black text-white mb-0.5">Pitta Shankumar</h3>
                 <p className="text-primary text-[11px] font-bold uppercase tracking-[0.15em] mb-4">Head of IT Board</p>
