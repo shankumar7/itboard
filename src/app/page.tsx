@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Code, Monitor, Cpu, Zap, Users, Trophy, ChevronRight, Mail, Phone, MessageCircle, ArrowUpRight, Send, CheckCircle2, UserCheck, Sparkles, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -24,6 +25,12 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 )
 
 export default function Home() {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.history.scrollRestoration = 'manual'
+      window.scrollTo(0, 0)
+    }
+  }, [])
   const steps = [
     { num: '01', title: 'Submit Application', desc: 'Fill out your details & position preferences in our portal.', icon: Send },
     { num: '02', title: 'Screening & Review', desc: 'Our board evaluates applications for skill alignment & drive.', icon: CheckCircle2 },

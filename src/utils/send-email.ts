@@ -56,6 +56,23 @@ export async function sendConfirmationEmail(payload: ApplicationEmailPayload) {
             </div>
           </div>
 
+          <div style="background: rgba(245, 197, 24, 0.08); border: 1px solid rgba(245, 197, 24, 0.3); border-radius: 14px; padding: 20px; margin: 25px 0;">
+            <p style="color: #f5c518; font-weight: 800; font-size: 13px; margin-top: 0; text-transform: uppercase; letter-spacing: 1px;">
+              ⚠️ Mandatory Step for Applicants
+            </p>
+            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 14px; line-height: 1.5;">
+              To validate your candidacy, you are required to follow both official Instagram pages below:
+            </p>
+            <div style="margin-bottom: 10px;">
+              <a href="https://www.instagram.com/itboard_cmrcet/" target="_blank" style="display: block; background: #f5c518; color: #0a0a0a; text-decoration: none; font-weight: 800; padding: 12px 18px; border-radius: 10px; font-size: 13px; text-align: center; margin-bottom: 8px;">
+                📸 Follow @itboard_cmrcet
+              </a>
+              <a href="https://www.instagram.com/student_council_cmrcet/" target="_blank" style="display: block; background: rgba(255,255,255,0.08); color: #ffffff; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 10px; font-size: 13px; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+                📸 Follow @student_council_cmrcet
+              </a>
+            </div>
+          </div>
+
           <p><strong>Next Steps:</strong></p>
           <p>Our core team is currently reviewing applications. Shortlisted candidates will be notified via email for interview slots.</p>
           

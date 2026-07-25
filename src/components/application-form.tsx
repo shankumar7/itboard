@@ -226,22 +226,80 @@ export function ApplicationForm() {
 
   if (isSubmitted) {
     return (
-      <div className="text-center py-16">
-        <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="text-center py-12 px-4 space-y-6">
+        <div className="w-20 h-20 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full flex items-center justify-center mx-auto">
           <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h2 className="text-3xl font-bold mb-4">Application Submitted Successfully</h2>
-        <p className="text-lg text-muted-foreground">
-          Thank you for applying. We'll contact shortlisted candidates for interviews.
-        </p>
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-black mb-2 text-white">Application Submitted! 🎉</h2>
+          <p className="text-sm text-white/50 max-w-md mx-auto">
+            Thank you for applying to the IT Board CMRCET. A confirmation email has been dispatched to your inbox.
+          </p>
+        </div>
+
+        {/* Mandatory Instagram Step */}
+        <div className="glass-card p-6 border-amber-500/30 bg-amber-500/[0.05] rounded-2xl max-w-md mx-auto text-left space-y-3">
+          <p className="text-primary font-extrabold text-xs uppercase tracking-widest">
+            ⚠️ Mandatory Final Step
+          </p>
+          <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
+            Ensure you are following both official Instagram handles to receive interview updates:
+          </p>
+          <div className="flex flex-col gap-2 pt-1">
+            <a 
+              href="https://www.instagram.com/itboard_cmrcet/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity"
+            >
+              📸 Follow @itboard_cmrcet ↗
+            </a>
+            <a 
+              href="https://www.instagram.com/student_council_cmrcet/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-colors"
+            >
+              📸 Follow @student_council_cmrcet ↗
+            </a>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+      
+      {/* Instagram Requirement Banner */}
+      <div className="glass-card p-5 border-amber-500/30 bg-amber-500/[0.05] rounded-2xl space-y-3">
+        <p className="text-primary font-extrabold text-xs uppercase tracking-widest">
+          ⚠️ Mandatory Action for Applicants
+        </p>
+        <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
+          It is mandatory for all applicants to follow both official Instagram pages to stay updated on shortlists & interview schedules:
+        </p>
+        <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+          <a 
+            href="https://www.instagram.com/itboard_cmrcet/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-primary text-black font-extrabold text-xs hover:opacity-90 transition-opacity"
+          >
+            📸 Follow @itboard_cmrcet ↗
+          </a>
+          <a 
+            href="https://www.instagram.com/student_council_cmrcet/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition-colors"
+          >
+            📸 Follow @student_council_cmrcet ↗
+          </a>
+        </div>
+      </div>
       
       {/* Section 1: Personal Info */}
       <div className="space-y-6">
