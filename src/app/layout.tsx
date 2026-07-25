@@ -11,6 +11,14 @@ const cursive = Great_Vibes({ subsets: ["latin"], variable: "--font-cursive", we
 export const metadata: Metadata = {
   title: "IT Board · Recruitment Portal",
   description: "Join the IT Board - Lead the future of technical communities at CMRCET.",
+  icons: {
+    icon: [
+      { url: "/it-board-logo.jpg" },
+      { url: "/it-board-logo.jpg", type: "image/jpeg" },
+    ],
+    shortcut: "/it-board-logo.jpg",
+    apple: "/it-board-logo.jpg",
+  },
 };
 
 export default function RootLayout({
