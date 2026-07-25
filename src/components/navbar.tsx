@@ -42,7 +42,7 @@ export function Navbar() {
             </div>
             <div className="min-w-0">
               <p className="text-white font-black text-sm sm:text-base tracking-tight leading-none truncate">IT Board</p>
-              <p className="text-white/30 text-[9px] sm:text-[10px] font-medium tracking-wider uppercase mt-0.5 hidden xs:block">CMRCET</p>
+              <p className="text-primary/70 text-[9px] font-bold tracking-widest uppercase mt-0.5 block">CMRCET</p>
             </div>
           </Link>
 

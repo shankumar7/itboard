@@ -83,51 +83,74 @@ export default function Home() {
     <div className="min-h-screen">
 
       {/* ════════════════ HERO ════════════════ */}
-      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden w-full max-w-full">
+      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden w-full max-w-full py-16 sm:py-24">
         {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] rounded-full bg-primary/[0.07] blur-[100px] sm:blur-[150px] animate-pulse pointer-events-none" />
-        <div className="absolute bottom-20 right-0 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-blue-500/[0.05] blur-[100px] sm:blur-[150px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[320px] sm:w-[600px] h-[320px] sm:h-[600px] rounded-full bg-primary/[0.09] blur-[100px] sm:blur-[160px] animate-pulse pointer-events-none" />
+        <div className="absolute bottom-10 right-0 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full bg-amber-500/[0.06] blur-[100px] sm:blur-[160px] pointer-events-none" />
 
         {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
+          backgroundSize: '50px 50px'
         }} />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 pt-20 sm:pt-32 pb-14 sm:pb-20 w-full overflow-hidden">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-20 w-full overflow-hidden">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center space-y-6 sm:space-y-10"
+            className="text-center space-y-6 sm:space-y-8"
           >
+            {/* Live Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-primary/30 text-[11px] font-bold text-primary tracking-widest uppercase backdrop-blur-xl shadow-[0_0_20px_rgba(245,197,24,0.15)]">
+              <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
+              <span>RECRUITMENT 2026 IS LIVE</span>
+            </div>
 
             {/* Headline */}
             <div className="px-2">
-              <h1 className="text-[clamp(1.75rem,7vw,7.5rem)] leading-[1.15] text-white tracking-normal font-normal break-words max-w-full" style={{ fontFamily: 'var(--font-cursive), cursive' }}>
-                Information Technology
-                <br />
-                <span className="text-primary">Board</span>
+              <h1 className="text-3xl sm:text-6xl md:text-7xl font-black text-white tracking-tight uppercase leading-[1.05]">
+                Information <br className="hidden xs:block sm:hidden" />
+                Technology
+                <span className="text-primary font-normal text-5xl sm:text-7xl md:text-8xl block mt-1 lowercase glow-text" style={{ fontFamily: 'var(--font-cursive)' }}>
+                  Board
+                </span>
               </h1>
-              <p className="text-white/40 text-sm sm:text-lg md:text-xl max-w-lg mx-auto mt-4 sm:mt-6 font-medium leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
+              <p className="text-white/50 text-sm sm:text-lg md:text-xl max-w-lg mx-auto mt-4 sm:mt-6 font-medium leading-relaxed" style={{ fontFamily: 'var(--font-sans)' }}>
                 Join the premier technical body shaping innovation, leadership, and collaboration at CMRCET.
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
-              <Link href="#apply" className="btn-primary flex items-center justify-center gap-2 group text-sm w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-2 sm:px-0 max-w-md mx-auto sm:max-w-none">
+              <Link href="#apply" className="btn-primary flex items-center justify-center gap-2 group text-sm w-full sm:w-auto shadow-[0_0_25px_rgba(245,197,24,0.3)]">
                 Apply Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="#clubs" className="btn-ghost flex items-center justify-center text-sm w-full sm:w-auto">
                 Explore Clubs
               </Link>
             </div>
+
+            {/* Stat Pills */}
+            <div className="pt-6 flex items-center justify-center gap-4 sm:gap-8 text-xs font-bold text-white/40 border-t border-white/5 max-w-md mx-auto">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span>3 Core Clubs</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span>16 Open Positions</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span>CMRCET</span>
+              </div>
+            </div>
           </motion.div>
         </div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none" />
       </section>
 
       {/* ════════════════ ABOUT ════════════════ */}
